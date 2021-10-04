@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { injectable, postConstruct, inject } from 'inversify';
 import { AlertMessage } from '@theia/core/lib/browser/widgets/alert-message';
 import { ReactWidget } from '@theia/core/lib/browser/widgets/react-widget';
@@ -324,13 +323,21 @@ export class extensionWidget extends ReactWidget {
 			//(document.getElementById('show_pattern') as HTMLElement).innerHTML = "This is the pattern you selected: " + extensionWidget.state.statePatternSelection;
 			
 			var url = extensionWidget.state.stateURLproject;
-			var folderpath = url.substring(url.indexOf('c:'));
+			var folderpath = url.substring(url.indexOf('c:')+2);
 			alert("Folder path: " + folderpath);
-			/*const fs = require('fs');
+			const fs = require('fs');
 			console.log("fs= ",fs);
-			fs.readdirSync(foldername).forEach((file: any) => {
-							console.log("File: " + file);
-						});*/
+			fs.readdir(folderpath, (err: any, files: any[]) => {
+				if (err)
+				  console.error(err);
+				else {
+				  console.log("\nCurrent directory filenames:");
+				  files.forEach((file: any) => {
+					console.log(file);
+				  })
+				}
+			  })
+				
 			
 				
 			//show the JSON values for the chosen key-pattern
