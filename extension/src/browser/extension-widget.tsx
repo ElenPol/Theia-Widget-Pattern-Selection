@@ -322,12 +322,12 @@ export class extensionWidget extends ReactWidget {
 		if (extensionWidget.state.statePatternSelection!="Choose_pattern" && extensionWidget.state.statePatternSelection!="" && extensionWidget.state.stateURLproject!="" && extensionWidget.state.stateURLproject!='Project URL'){
 			//(document.getElementById('show_pattern') as HTMLElement).innerHTML = "This is the pattern you selected: " + extensionWidget.state.statePatternSelection;
 			
-			var url = extensionWidget.state.stateURLproject;
+			/*var url = extensionWidget.state.stateURLproject;
 			var folderpath = url.substring(url.indexOf('c:')+2);
 			alert("Folder path: " + folderpath);
 			const fs = require('fs');
-			console.log("fs= ",fs);
-			fs.readdir(folderpath, (err: any, files: any[]) => {
+			console.log("fse= ",fs);
+			fs.readFile(folderpath, (err: any, files: any[]) => {
 				if (err)
 				  console.error(err);
 				else {
@@ -336,10 +336,12 @@ export class extensionWidget extends ReactWidget {
 					console.log(file);
 				  })
 				}
-			  })
+			  })*/
 				
 			
-				
+			  
+			(document.getElementById("btn-get-code") as HTMLButtonElement).style.visibility = 'hidden';
+			 
 			//show the JSON values for the chosen key-pattern
 			var  index = extensionWidget.a.findIndex(x => x.name === extensionWidget.state.statePatternSelection);
 			console.log(index);
@@ -347,24 +349,70 @@ export class extensionWidget extends ReactWidget {
 			console.log(k);
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
 			for (var i=0;i< k.length;i++){
+				
 				var row = table.insertRow(i);
 				var cell1 = row.insertCell(0);
 				var cell2 = row.insertCell(1);
-				var t1 = document.createElement("label"+i);
+				var t1 = document.createElement("label");
 				t1.innerHTML = k[i];
-				var t2 = document.createElement("input"+i);
+				t1.id = "label"+i;
+				var t2 = document.createElement("input");
+				t2.id = "txtbox"+i;
+				t2.placeholder = k[i];
 				cell1.appendChild(t1);
 				cell1.style.width = "200px";
 				cell2.appendChild(t2);
 				cell2.style.width = "200px";
+				
 			}
+			var size = table.rows.length;
+			row = table.insertRow(size);
+			cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "More";
+			t3.id = "btn-plus";
+			t3.style.marginLeft = "10px";
+			t3.onclick =  function() {
+				
+				table = document.getElementById('show_pattern_table') as HTMLTableElement;
+				size = table.rows.length;	
+				//alert("table size = " + size);
+				var row = table.insertRow(size-1);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				var t1 = document.createElement("select");
+				t1.id = "dropdownlist"+(size-1);
+				for (var i=0;i< k.length;i++) {
+					var option = document.createElement("option");
+					option.value = k[i];
+					option.text = k[i];
+					t1.appendChild(option);
+				}
+				//t1.onchange = this.updateSelection;
+				var t2 = document.createElement("input");
+				t2.id = "txtbox"+(size-1);
+				cell1.appendChild(t1);
+				cell1.style.width = "200px";
+				cell2.appendChild(t2);
+				cell2.style.width = "200px";
+				
+			}
+			cell2.appendChild(t3);
+			
+
 			//document.getElementById('btn-get-classes').style.display = "block";
 			
 			
+		}else if (extensionWidget.state.stateURLproject=='Project URL' || extensionWidget.state.stateURLproject==""){
+			this.messageService.info('You need to enter the Theia URL of the project!');
+		
 		}else{
 			this.messageService.info('You need to choose a software pattern!');
 		}
 	}
+
+	
 
 	
     //update the state
