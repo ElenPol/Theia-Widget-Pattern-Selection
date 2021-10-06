@@ -16,6 +16,7 @@
     "@theia/process": "latest",
     "@theia/terminal": "latest",
     "@theia/workspace": "latest",
+    "browserify-fs": "^1.0.0",
     "extension": "0.0.0",
     "walk": "^2.3.15"
   },
