@@ -32,28 +32,20 @@ export class extensionWidget extends ReactWidget {
 	}
 	
 	static setState: any;
-	//handleChange(e: { target: { value: any; }; }) {
-		//console.log("Pattern Selected!!");
-		//this.messageService.info('DesignPattern Selected');
-        //extensionWidget.setState({ statePatternSelection : e.target.value });
-		//extensionWidget.setState({ stateURLproject : e.target.value });
-	  //}
 	
 	static a = [
 		{
 		   "name":"Abstract Factory",
 		   "values":[
 			  "AbstractFactory",
-			  "ConcreteFactory1",
-			  "ConcreteFactory2",
+			  "ConcreteFactory",
 			  "AbstractProductA",
-			  "ProductA2",
-			  "ProductA1",
-			  "Client",
 			  "AbstractProductB",
-			  "ProductB2",
-			  "ProductB1"
-		   ]
+			  "ProductA",
+			  "ProductB",
+			  "Client"
+		   ],
+		   "btnExtension":[0,0,1,1,1,1,0]
 		},
 		{
 		   "name":"Builder",
@@ -62,7 +54,8 @@ export class extensionWidget extends ReactWidget {
 			  "Builder",
 			  "ConcreteBuilder",
 			  "Product"
-		   ]
+		   ],
+		   "btnExtension":[0,0,1,1]
 		},
 		{
 		   "name":"Factroy Method",
@@ -71,22 +64,24 @@ export class extensionWidget extends ReactWidget {
 			  "ConcreteProduct",
 			  "Creator",
 			  "ConcreteCreator"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0,0]
 		},
 		{
 		   "name":"Prototype",
 		   "values":[
 			  "Client",
 			  "Prototype",
-			  "ConcreteProtottype1",
-			  "ConcretePrototype2"
-		   ]
+			  "ConcretePrototype"
+		   ],
+		   "btnExtension":[0,0,1]
 		},
 		{
 		   "name":"Singleton",
 		   "values":[
 			  "Singleton"
-		   ]
+		   ],
+		   "btnExtension":[0]
 		},
 		{
 		   "name":"Adapter",
@@ -95,7 +90,8 @@ export class extensionWidget extends ReactWidget {
 			  "Target",
 			  "Adapter",
 			  "Adaptee"
-		   ]
+		   ],
+		   "btnExtension":[0,0,1,1]
 		},
 		{
 		   "name":"Bridge",
@@ -104,9 +100,9 @@ export class extensionWidget extends ReactWidget {
 			  "Abstraction",
 			  "RefinedAbstraction",
 			  "Implementor",
-			  "ConcreteImplementorA",
-			  "ConcreteImplementorB"
-		   ]
+			  "ConcreteImplementor"
+		   ],
+		   "btnExtension":[0,0,1,0,1]
 		},
 		{
 		   "name":"Composite",
@@ -115,7 +111,8 @@ export class extensionWidget extends ReactWidget {
 			  "Component",
 			  "Leaf",
 			  "Composite"
-		   ]
+		   ],
+		   "btnExtension":[0,0,1,1]
 		},
 		{
 		   "name":"Decorator",
@@ -123,15 +120,16 @@ export class extensionWidget extends ReactWidget {
 			  "Component",
 			  "ConcreteComponent",
 			  "Decorator",
-			  "ConcreteDecoratorA",
-			  "ConcreteDecoratorB"
-		   ]
+			  "ConcreteDecorator"
+		   ],
+		   "btnExtension":[0,1,0,1]
 		},
-		{
+		{//??
 		   "name":"Facade",
 		   "values":[
 			  ""
-		   ]
+		   ],
+		   "btnExtension":[0]
 		},
 		{
 		   "name":"Flyweight",
@@ -142,24 +140,27 @@ export class extensionWidget extends ReactWidget {
 			  "ConcreteFlyweight",
 			  "UnsharedConcreteFlyweight",
 			  "Client"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0,0]
 		},
 		{
 		   "name":"Proxy",
 		   "values":[
+			  "Client",
 			  "Subject",
 			  "Proxy",
 			  "RealSubject"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0,0]
 		},
 		{
 		   "name":"Chain of Responsibility",
 		   "values":[
 			  "Client",
 			  "Handler",
-			  "ConcreteHandler1",
-			  "ConcreteHandler2"
-		   ]
+			  "ConcreteHandler"
+		   ],
+		   "btnExtension":[0,0,1]
 		},
 		{
 		   "name":"Command",
@@ -169,9 +170,10 @@ export class extensionWidget extends ReactWidget {
 			  "Client",
 			  "Invoker",
 			  "Receiver"
-		   ]
+		   ],
+		   "btnExtension":[0,1,0,0,0]
 		},
-		{
+		{//???/
 		   "name":"Interpreter",
 		   "values":[
 			  "Client",
@@ -179,9 +181,10 @@ export class extensionWidget extends ReactWidget {
 			  "AbstractExpression",
 			  "TerminalExpression",
 			  "NonterminalExpression"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0,0,0]
 		},
-		{
+		{///???
 		   "name":"Iterator",
 		   "values":[
 			  "Aggregate",
@@ -189,7 +192,8 @@ export class extensionWidget extends ReactWidget {
 			  "Iterator",
 			  "ConcreteAggregate",
 			  "ConcreteIterator"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0,1,1]
 		},
 		{
 		   "name":"Mediator",
@@ -197,66 +201,69 @@ export class extensionWidget extends ReactWidget {
 			  "Mediator",
 			  "Colleague",
 			  "ConcreteMediator",
-			  "ConcreteColleague1",
-			  "ConcreteColleague2"
-		   ]
+			  "ConcreteColleague"
+		   ],
+		   "btnExtension":[0,0,0,1]
 		},
-		{
+		{///???
 		   "name":"Memento",
 		   "values":[
 			  "Originator",
 			  "Memento",
 			  "Caretaker"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0]
 		},
-		{
+		{//???/
 		   "name":"Observer",
 		   "values":[
 			  "Subject",
 			  "Observer",
 			  "ConcreteSubject",
 			  "ConcreteObserver"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0,0]
 		},
 		{
 		   "name":"State",
 		   "values":[
 			  "Context",
 			  "State",
-			  "ConcreteStateA",
-			  "ConcreteStateB"
-		   ]
+			  "ConcreteState"
+		   ],
+		   "btnExtension":[0,0,1]
 		},
 		{
 		   "name":"Strategy",
 		   "values":[
 			  "Context",
 			  "Strategy",
-			  "ConcreteStrategyA",
-			  "ConcreteStrategyB"
-		   ]
+			  "ConcreteStrategy"
+		   ],
+		   "btnExtension":[0,0,1]
 		},
 		{
 		   "name":"Template Method",
 		   "values":[
 			  "AbstractClass",
 			  "ConcreteClass"
-		   ]
+		   ],
+		   "btnExtension":[0,0]
 		},
 		{
 		   "name":"Visitor",
 		   "values":[
 			  "Client",
 			  "Visitor",
-			  "ConcreteVisitor1",
-			  "ConcreteVisitor2",
+			  "ConcreteVisitor",
 			  "ObjectStructure",
 			  "Element",
-			  "ConcreteElementA",
-			  "ConcreteElementB"
-		   ]
+			  "ConcreteElement"
+		   ],
+		   "btnExtension":[0,0,1,0,0,1]
 		}
 	 ];
+	
 	protected render(): React.ReactNode {
 		const header = `Choose a Design Pattern and get the code. `;
 		
@@ -345,35 +352,45 @@ export class extensionWidget extends ReactWidget {
 			//show the JSON values for the chosen key-pattern
 			var  index = extensionWidget.a.findIndex(x => x.name === extensionWidget.state.statePatternSelection);
 			console.log(index);
-			var k = extensionWidget.a[index]["values"];
-			console.log(k);
+			var values = extensionWidget.a[index]["values"];
+			var btnExtension = extensionWidget.a[index]["btnExtension"] ;
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
-			for (var i=0;i< k.length;i++){
+			for (var i=0;i< values.length;i++){
 				
 				var row = table.insertRow(i);
 				var cell1 = row.insertCell(0);
 				var cell2 = row.insertCell(1);
 				var t1 = document.createElement("label");
-				t1.innerHTML = k[i];
+				t1.innerHTML = values[i];
 				t1.id = "label"+i;
 				var t2 = document.createElement("input");
 				t2.id = "txtbox"+i;
-				t2.placeholder = k[i];
+				t2.placeholder = values[i];
 				cell1.appendChild(t1);
-				cell1.style.width = "200px";
+				//cell1.style.width = "200px";
 				cell2.appendChild(t2);
-				cell2.style.width = "200px";
-				
+				//cell2.style.width = "200px";
+				if(btnExtension[i]==1){
+					var cell3 = row.insertCell(2);
+					var t3 = document.createElement("button");
+					t3.innerHTML = "More";
+					t3.id = "btn"+ values[i];
+					cell3.appendChild(t3);
+					t3.onclick = (event) => {
+						this.buttonClick (table, t3.id);
+					  };
+				}
 			}
-			var size = table.rows.length;
+
+			/*var size = table.rows.length;
 			row = table.insertRow(size);
 			cell1 = row.insertCell(0);
 			var cell2 = row.insertCell(1);
 			var t3 = document.createElement("button");
 			t3.innerHTML = "More";
 			t3.id = "btn-plus";
-			t3.style.marginLeft = "10px";
-			t3.onclick =  function() {
+			t3.style.marginLeft = "10px";*/
+			/*t3.onclick =  function() {
 				
 				table = document.getElementById('show_pattern_table') as HTMLTableElement;
 				size = table.rows.length;	
@@ -383,23 +400,23 @@ export class extensionWidget extends ReactWidget {
 				var cell2 = row.insertCell(1);
 				var t1 = document.createElement("select");
 				t1.id = "dropdownlist"+(size-1);
-				for (var i=0;i< k.length;i++) {
+				for (var i=0;i< values.length;i++) {
 					var option = document.createElement("option");
-					option.value = k[i];
-					option.text = k[i];
+					option.value = values[i];
+					option.text = values[i];
 					t1.appendChild(option);
 				}
 				//t1.onchange = this.updateSelection;
 				var t2 = document.createElement("input");
 				t2.id = "txtbox"+(size-1);
 				cell1.appendChild(t1);
-				cell1.style.width = "200px";
+				//cell1.style.width = "200px";
 				cell2.appendChild(t2);
-				cell2.style.width = "200px";
+				//cell2.style.width = "200px";
 				
 			}
 			cell2.appendChild(t3);
-			
+			*/
 
 			//document.getElementById('btn-get-classes').style.display = "block";
 			
@@ -412,9 +429,6 @@ export class extensionWidget extends ReactWidget {
 		}
 	}
 
-	
-
-	
     //update the state
     updateSelection(e:React.ChangeEvent<HTMLSelectElement>){
 		const key =e.currentTarget.name as keyof typeof extensionWidget.state;
@@ -427,5 +441,22 @@ export class extensionWidget extends ReactWidget {
 		extensionWidget.state[key]  = e.currentTarget.value;
 		
 	}
-	
+	buttonClick (table: HTMLTableElement, value: string) {
+		table = document.getElementById('show_pattern_table') as HTMLTableElement;
+		var size = table.rows.length;	
+		var row = table.insertRow(size-1);
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var t1 = document.createElement("label");
+		t1.id = "label"+(size);
+		t1.innerHTML = value.substr(3,);
+		var t2 = document.createElement("input");
+		t2.id = "txtbox"+(size);
+		t2.placeholder = value.substr(3,);
+		cell1.appendChild(t1);
+		cell2.appendChild(t2);
+		
+		
+		
+	}
 }	

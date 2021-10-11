@@ -1,3 +1,4 @@
+
 #widget-container h2 {
     color: var(--theia-ui-font-color1);
     font-size: 12px;
@@ -5,6 +6,7 @@
     padding: 10px;
     text-transform: uppercase;
 }
+
 
 input{
 	margin-left: 10px;
@@ -19,7 +21,9 @@ input{
 	margin-left: 10px;
 	margin-top: 20px;
 }
-
+#show_pattern_table td {
+	width: 200px;
+}
 #issues{
 	margin-left: 10px;
 }
