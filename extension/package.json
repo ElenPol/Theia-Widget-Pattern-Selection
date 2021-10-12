@@ -23,6 +23,11 @@
     "build": "tsc",
     "watch": "tsc -w"
   },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "theiaExtensions": [
     {
       "frontend": "lib/browser/extension-frontend-module"

@@ -21,6 +21,12 @@
             "es6",
             "dom"
         ],
+        "typeRoots": [
+            "./node_modules/@types"
+        ],
+        "types": [
+            "node"
+          ],
         "sourceMap": true,
         "rootDir": "src",
         "outDir": "lib"

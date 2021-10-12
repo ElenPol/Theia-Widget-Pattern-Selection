@@ -1,9 +1,9 @@
 import * as React from 'react';
-
 import { injectable, postConstruct, inject } from 'inversify';
 import { AlertMessage } from '@theia/core/lib/browser/widgets/alert-message';
 import { ReactWidget } from '@theia/core/lib/browser/widgets/react-widget';
 import { MessageService } from '@theia/core';
+import { integer } from 'vscode-languageserver-types';
 //import * as data from './data.json';
 
 
@@ -33,37 +33,30 @@ export class extensionWidget extends ReactWidget {
 	}
 	
 	static setState: any;
-	//handleChange(e: { target: { value: any; }; }) {
-		//console.log("Pattern Selected!!");
-		//this.messageService.info('DesignPattern Selected');
-        //extensionWidget.setState({ statePatternSelection : e.target.value });
-		//extensionWidget.setState({ stateURLproject : e.target.value });
-	  //}
 	
 	static a = [
-		{
+		{//???
 		   "name":"Abstract Factory",
 		   "values":[
 			  "AbstractFactory",
-			  "ConcreteFactory1",
-			  "ConcreteFactory2",
-			  "AbstractProductA",
-			  "ProductA2",
-			  "ProductA1",
-			  "Client",
-			  "AbstractProductB",
-			  "ProductB2",
-			  "ProductB1"
-		   ]
+			  "ConcreteFactory",
+			  "AbstractProduct1",
+			  "Product1",
+			  "Client"
+		   ],
+		   "btnExtension":[0,0,1,1,0],
+		   "counter": 1,
 		},
 		{
 		   "name":"Builder",
 		   "values":[
 			  "Director",
 			  "Builder",
-			  "ConcreteBuilder",
-			  "Product"
-		   ]
+			  "ConcreteBuilder1",
+			  "Product1"
+		   ],
+		   "btnExtension":[0,0,1,1],
+		   "counter": 1,
 		},
 		{
 		   "name":"Factroy Method",
@@ -72,67 +65,80 @@ export class extensionWidget extends ReactWidget {
 			  "ConcreteProduct",
 			  "Creator",
 			  "ConcreteCreator"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0,0],
+		   "counter": 1,
 		},
 		{
 		   "name":"Prototype",
 		   "values":[
 			  "Client",
 			  "Prototype",
-			  "ConcreteProtottype1",
-			  "ConcretePrototype2"
-		   ]
+			  "ConcretePrototype1"
+		   ],
+		   "btnExtension":[0,0,1],
+		   "counter": 1,
 		},
 		{
 		   "name":"Singleton",
 		   "values":[
 			  "Singleton"
-		   ]
+		   ],
+		   "btnExtension":[0],
+		   "counter": 1,
 		},
 		{
 		   "name":"Adapter",
 		   "values":[
 			  "Client",
 			  "Target",
-			  "Adapter",
-			  "Adaptee"
-		   ]
+			  "Adapter1",
+			  "Adaptee1"
+		   ],
+		   "btnExtension":[0,0,1,1],
+		   "counter": 1,
 		},
 		{
 		   "name":"Bridge",
 		   "values":[
 			  "Client",
 			  "Abstraction",
-			  "RefinedAbstraction",
+			  "RefinedAbstraction1",
 			  "Implementor",
-			  "ConcreteImplementorA",
-			  "ConcreteImplementorB"
-		   ]
+			  "ConcreteImplementor1"
+		   ],
+		   "btnExtension":[0,0,1,0,1],
+		   "counter": 1,
 		},
 		{
 		   "name":"Composite",
 		   "values":[
 			  "Client",
 			  "Component",
-			  "Leaf",
-			  "Composite"
-		   ]
+			  "Leaf1",
+			  "Composite1"
+		   ],
+		   "btnExtension":[0,0,1,1],
+		   "counter": 1,
 		},
 		{
 		   "name":"Decorator",
 		   "values":[
 			  "Component",
-			  "ConcreteComponent",
+			  "ConcreteComponent1",
 			  "Decorator",
-			  "ConcreteDecoratorA",
-			  "ConcreteDecoratorB"
-		   ]
+			  "ConcreteDecorator1"
+		   ],
+		   "btnExtension":[0,1,0,1],
+		   "counter": 1,
 		},
-		{
+		{//??
 		   "name":"Facade",
 		   "values":[
 			  ""
-		   ]
+		   ],
+		   "btnExtension":[0],
+		   "counter": 1,
 		},
 		{
 		   "name":"Flyweight",
@@ -143,36 +149,44 @@ export class extensionWidget extends ReactWidget {
 			  "ConcreteFlyweight",
 			  "UnsharedConcreteFlyweight",
 			  "Client"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0,0],
+		   "counter": 1,
 		},
 		{
 		   "name":"Proxy",
 		   "values":[
+			  "Client",
 			  "Subject",
 			  "Proxy",
 			  "RealSubject"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0,0],
+		   "counter": 1,
 		},
 		{
 		   "name":"Chain of Responsibility",
 		   "values":[
 			  "Client",
 			  "Handler",
-			  "ConcreteHandler1",
-			  "ConcreteHandler2"
-		   ]
+			  "ConcreteHandler1"
+		   ],
+		   "btnExtension":[0,0,1],
+		   "counter": 1,
 		},
 		{
 		   "name":"Command",
 		   "values":[
 			  "Command",
-			  "ConcreteCommand",
+			  "ConcreteCommand1",
 			  "Client",
 			  "Invoker",
 			  "Receiver"
-		   ]
+		   ],
+		   "btnExtension":[0,1,0,0,0],
+		   "counter": 1,
 		},
-		{
+		{//???/
 		   "name":"Interpreter",
 		   "values":[
 			  "Client",
@@ -180,17 +194,21 @@ export class extensionWidget extends ReactWidget {
 			  "AbstractExpression",
 			  "TerminalExpression",
 			  "NonterminalExpression"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0,0,0],
+		   "counter": 1,
 		},
-		{
+		{///???
 		   "name":"Iterator",
 		   "values":[
 			  "Aggregate",
 			  "Client",
 			  "Iterator",
-			  "ConcreteAggregate",
-			  "ConcreteIterator"
-		   ]
+			  "ConcreteAggregate1",
+			  "ConcreteIterator1"
+		   ],
+		   "btnExtension":[0,0,0,1,1],
+		   "counter": 1,
 		},
 		{
 		   "name":"Mediator",
@@ -198,51 +216,60 @@ export class extensionWidget extends ReactWidget {
 			  "Mediator",
 			  "Colleague",
 			  "ConcreteMediator",
-			  "ConcreteColleague1",
-			  "ConcreteColleague2"
-		   ]
+			  "ConcreteColleague1"
+		   ],
+		   "btnExtension":[0,0,0,1],
+		   "counter": 1,
 		},
-		{
+		{///???
 		   "name":"Memento",
 		   "values":[
 			  "Originator",
 			  "Memento",
 			  "Caretaker"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0],
+		   "counter": 1,
 		},
-		{
+		{//???/
 		   "name":"Observer",
 		   "values":[
 			  "Subject",
 			  "Observer",
 			  "ConcreteSubject",
 			  "ConcreteObserver"
-		   ]
+		   ],
+		   "btnExtension":[0,0,0,0],
+		   "counter": 1,
 		},
 		{
 		   "name":"State",
 		   "values":[
 			  "Context",
 			  "State",
-			  "ConcreteStateA",
-			  "ConcreteStateB"
-		   ]
+			  "ConcreteState1"
+		   ],
+		   "btnExtension":[0,0,1],
+		   "counter": 1,
 		},
 		{
 		   "name":"Strategy",
 		   "values":[
 			  "Context",
 			  "Strategy",
-			  "ConcreteStrategyA",
-			  "ConcreteStrategyB"
-		   ]
+			  "ConcreteStrategy1"
+		   ],
+		   "btnExtension":[0,0,1],
+		   "counter": 1,
 		},
 		{
 		   "name":"Template Method",
 		   "values":[
 			  "AbstractClass",
 			  "ConcreteClass"
-		   ]
+		   ],
+		   "btnExtension":[0,0],
+		   "counter": 1,
 		},
 		{
 		   "name":"Visitor",
@@ -250,24 +277,25 @@ export class extensionWidget extends ReactWidget {
 			  "Client",
 			  "Visitor",
 			  "ConcreteVisitor1",
-			  "ConcreteVisitor2",
 			  "ObjectStructure",
 			  "Element",
-			  "ConcreteElementA",
-			  "ConcreteElementB"
-		   ]
+			  "ConcreteElement1"
+		   ],
+		   "btnExtension":[0,0,1,0,0,1],
+		   "counter": 1,
 		}
 	 ];
+	
 	protected render(): React.ReactNode {
 		const header = `Choose a Design Pattern and get the code. `;
 		
 		return <div id='widget-container'>
 		<AlertMessage type='INFO' header={header} />
 		<br /> 
+		<label id="label-URL-project">Provide the Projects's URL</label>
 		<input id="URL-project" onChange={this.updateInput} placeholder='Project URL' name="stateURLproject"></input>
 		<br />
 		<div id='issues'>
-				
 				<br />
 				<select id="drop-down-patterns" onChange={this.updateSelection} name="statePatternSelection">
 						<option id="empty-choice" value="Choose_pattern">Choose pattern</option>
@@ -321,45 +349,53 @@ export class extensionWidget extends ReactWidget {
 	
     protected runprocess(): void {
 		if (extensionWidget.state.statePatternSelection!="Choose_pattern" && extensionWidget.state.statePatternSelection!="" && extensionWidget.state.stateURLproject!="" && extensionWidget.state.stateURLproject!='Project URL'){
-			//(document.getElementById('show_pattern') as HTMLElement).innerHTML = "This is the pattern you selected: " + extensionWidget.state.statePatternSelection;
-			
-			var url = extensionWidget.state.stateURLproject;
-			var folderpath = url.substring(url.indexOf('c:'));
-			alert("Folder path: " + folderpath);
-			/*const fs = require('fs');
-			console.log("fs= ",fs);
-			fs.readdirSync(foldername).forEach((file: any) => {
-							console.log("File: " + file);
-						});*/
-			
-				
+			(document.getElementById("btn-get-code") as HTMLButtonElement).style.visibility = 'hidden';
+			 
 			//show the JSON values for the chosen key-pattern
 			var  index = extensionWidget.a.findIndex(x => x.name === extensionWidget.state.statePatternSelection);
 			console.log(index);
-			var k = extensionWidget.a[index]["values"];
-			console.log(k);
+			var values = extensionWidget.a[index]["values"];
+			var btnExtension = extensionWidget.a[index]["btnExtension"] ;
+			var counter = extensionWidget.a[index]["counter"] ;
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
-			for (var i=0;i< k.length;i++){
+			for (var i=0;i< values.length;i++){
 				var row = table.insertRow(i);
 				var cell1 = row.insertCell(0);
 				var cell2 = row.insertCell(1);
-				var t1 = document.createElement("label"+i);
-				t1.innerHTML = k[i];
-				var t2 = document.createElement("input"+i);
+				var t1 = document.createElement("label");
+				t1.innerHTML = values[i];
+				t1.id = "label"+i;
+				var t2 = document.createElement("input");
+				t2.id = "txtbox"+i;
+				t2.placeholder = values[i];
 				cell1.appendChild(t1);
-				cell1.style.width = "200px";
+				//cell1.style.width = "200px";
 				cell2.appendChild(t2);
-				cell2.style.width = "200px";
+				//cell2.style.width = "200px";
+				if(btnExtension[i]==1){
+					var cell3 = row.insertCell(2);
+					var t3 = document.createElement("button");
+					t3.innerHTML = "+";
+					t3.id = "btn"+ values[i];
+					cell3.appendChild(t3);
+					t3.addEventListener('click', (event) => {
+						this.buttonClick(table, ( event.target as Element).id, counter +1);
+						counter = counter + 1;
+					});	
+
+				}
 			}
-			//document.getElementById('btn-get-classes').style.display = "block";
 			
-			
+			   
+
+		}else if (extensionWidget.state.stateURLproject=='Project URL' || extensionWidget.state.stateURLproject==""){
+			this.messageService.info('You need to enter the Theia URL of the project!');
+		
 		}else{
 			this.messageService.info('You need to choose a software pattern!');
 		}
 	}
 
-	
     //update the state
     updateSelection(e:React.ChangeEvent<HTMLSelectElement>){
 		const key =e.currentTarget.name as keyof typeof extensionWidget.state;
@@ -372,5 +408,27 @@ export class extensionWidget extends ReactWidget {
 		extensionWidget.state[key]  = e.currentTarget.value;
 		
 	}
-	
+	//when button is clicked adds one label and one input of the specific class that the user wants to insert one more 
+	buttonClick (table: HTMLTableElement, value: string, counter: integer): void {
+		table = document.getElementById('show_pattern_table') as HTMLTableElement;
+		var size = table.rows.length;	
+		var row = table.insertRow(size);
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var t1 = document.createElement("label");
+		t1.id = "label"+(size);
+		value = this.updateLabelValue(value.substr(3,), counter);
+		t1.innerHTML = value;
+		var t2 = document.createElement("input");
+		t2.id = "txtbox"+(size);
+		t2.placeholder = value;
+		cell1.appendChild(t1);
+		cell2.appendChild(t2);
+	}
+
+	updateLabelValue(string : string, counter: integer): string {
+		let lastChar = string.slice(-1);
+		string = string.replace(lastChar, counter.toString());
+		return string;
+	}
 }	
