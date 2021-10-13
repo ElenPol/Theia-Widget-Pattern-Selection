@@ -3,8 +3,9 @@ import { injectable, postConstruct, inject } from 'inversify';
 import { AlertMessage } from '@theia/core/lib/browser/widgets/alert-message';
 import { ReactWidget } from '@theia/core/lib/browser/widgets/react-widget';
 import { MessageService } from '@theia/core';
+//import { workspace} from '@theia/plugin';
 import { integer } from 'vscode-languageserver-types';
-//import * as data from './data.json';
+
 
 
 @injectable()
@@ -34,7 +35,7 @@ export class extensionWidget extends ReactWidget {
 	
 	static setState: any;
 	
-	static a = [
+	static arrayOfJSON = [
 		{//???
 		   "name":"Abstract Factory",
 		   "values":[
@@ -285,7 +286,6 @@ export class extensionWidget extends ReactWidget {
 		   "counter": 1,
 		}
 	 ];
-	
 	protected render(): React.ReactNode {
 		const header = `Choose a Design Pattern and get the code. `;
 		
@@ -352,16 +352,16 @@ export class extensionWidget extends ReactWidget {
 			(document.getElementById("btn-get-code") as HTMLButtonElement).style.visibility = 'hidden';
 			 
 			//show the JSON values for the chosen key-pattern
-			var  index = extensionWidget.a.findIndex(x => x.name === extensionWidget.state.statePatternSelection);
+			var  index = extensionWidget.arrayOfJSON.findIndex(x => x.name === extensionWidget.state.statePatternSelection);
 			console.log(index);
-			var values = extensionWidget.a[index]["values"];
-			var btnExtension = extensionWidget.a[index]["btnExtension"] ;
-			var counter = extensionWidget.a[index]["counter"] ;
+			var values = extensionWidget.arrayOfJSON[index]["values"];
+			var btnExtension = extensionWidget.arrayOfJSON[index]["btnExtension"] ;
+			var counter = extensionWidget.arrayOfJSON[index]["counter"] ;
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
 			for (var i=0;i< values.length;i++){
 				var row = table.insertRow(i);
 				var cell1 = row.insertCell(0);
-				var cell2 = row.insertCell(1);
+				var cell2 = row.insertCell(1); 
 				var t1 = document.createElement("label");
 				t1.innerHTML = values[i];
 				t1.id = "label"+i;
@@ -369,9 +369,7 @@ export class extensionWidget extends ReactWidget {
 				t2.id = "txtbox"+i;
 				t2.placeholder = values[i];
 				cell1.appendChild(t1);
-				//cell1.style.width = "200px";
 				cell2.appendChild(t2);
-				//cell2.style.width = "200px";
 				if(btnExtension[i]==1){
 					var cell3 = row.insertCell(2);
 					var t3 = document.createElement("button");
@@ -382,11 +380,9 @@ export class extensionWidget extends ReactWidget {
 						this.buttonClick(table, ( event.target as Element).id, counter +1);
 						counter = counter + 1;
 					});	
-
 				}
 			}
 			
-			   
 
 		}else if (extensionWidget.state.stateURLproject=='Project URL' || extensionWidget.state.stateURLproject==""){
 			this.messageService.info('You need to enter the Theia URL of the project!');
@@ -410,7 +406,6 @@ export class extensionWidget extends ReactWidget {
 	}
 	//when button is clicked adds one label and one input of the specific class that the user wants to insert one more 
 	buttonClick (table: HTMLTableElement, value: string, counter: integer): void {
-		table = document.getElementById('show_pattern_table') as HTMLTableElement;
 		var size = table.rows.length;	
 		var row = table.insertRow(size);
 		var cell1 = row.insertCell(0);
@@ -422,6 +417,7 @@ export class extensionWidget extends ReactWidget {
 		var t2 = document.createElement("input");
 		t2.id = "txtbox"+(size);
 		t2.placeholder = value;
+		t2.autocomplete = "off";
 		cell1.appendChild(t1);
 		cell2.appendChild(t2);
 	}
@@ -431,4 +427,8 @@ export class extensionWidget extends ReactWidget {
 		string = string.replace(lastChar, counter.toString());
 		return string;
 	}
+	
 }	
+
+
+
