@@ -4,7 +4,8 @@ import { AlertMessage } from '@theia/core/lib/browser/widgets/alert-message';
 import { ReactWidget } from '@theia/core/lib/browser/widgets/react-widget';
 import { MessageService } from '@theia/core';
 import { integer } from 'vscode-languageserver-types';
-//import * as data from './data.json';
+import data from './data1.json';
+import { HelloBackendServiceImpl } from '../node/hello-backend-service';
 
 
 @injectable()
@@ -33,259 +34,9 @@ export class extensionWidget extends ReactWidget {
 	}
 	
 	static setState: any;
+	static counter: number[];
 	
-	static a = [
-		{//???
-		   "name":"Abstract Factory",
-		   "values":[
-			  "AbstractFactory",
-			  "ConcreteFactory",
-			  "AbstractProduct1",
-			  "Product1",
-			  "Client"
-		   ],
-		   "btnExtension":[0,0,1,1,0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Builder",
-		   "values":[
-			  "Director",
-			  "Builder",
-			  "ConcreteBuilder1",
-			  "Product1"
-		   ],
-		   "btnExtension":[0,0,1,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Factroy Method",
-		   "values":[
-			  "Product",
-			  "ConcreteProduct",
-			  "Creator",
-			  "ConcreteCreator"
-		   ],
-		   "btnExtension":[0,0,0,0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Prototype",
-		   "values":[
-			  "Client",
-			  "Prototype",
-			  "ConcretePrototype1"
-		   ],
-		   "btnExtension":[0,0,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Singleton",
-		   "values":[
-			  "Singleton"
-		   ],
-		   "btnExtension":[0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Adapter",
-		   "values":[
-			  "Client",
-			  "Target",
-			  "Adapter1",
-			  "Adaptee1"
-		   ],
-		   "btnExtension":[0,0,1,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Bridge",
-		   "values":[
-			  "Client",
-			  "Abstraction",
-			  "RefinedAbstraction1",
-			  "Implementor",
-			  "ConcreteImplementor1"
-		   ],
-		   "btnExtension":[0,0,1,0,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Composite",
-		   "values":[
-			  "Client",
-			  "Component",
-			  "Leaf1",
-			  "Composite1"
-		   ],
-		   "btnExtension":[0,0,1,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Decorator",
-		   "values":[
-			  "Component",
-			  "ConcreteComponent1",
-			  "Decorator",
-			  "ConcreteDecorator1"
-		   ],
-		   "btnExtension":[0,1,0,1],
-		   "counter": 1,
-		},
-		{//??
-		   "name":"Facade",
-		   "values":[
-			  ""
-		   ],
-		   "btnExtension":[0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Flyweight",
-		   "values":[
-			  "Client",
-			  "FlyweightFactory",
-			  "Flyweight",
-			  "ConcreteFlyweight",
-			  "UnsharedConcreteFlyweight",
-			  "Client"
-		   ],
-		   "btnExtension":[0,0,0,0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Proxy",
-		   "values":[
-			  "Client",
-			  "Subject",
-			  "Proxy",
-			  "RealSubject"
-		   ],
-		   "btnExtension":[0,0,0,0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Chain of Responsibility",
-		   "values":[
-			  "Client",
-			  "Handler",
-			  "ConcreteHandler1"
-		   ],
-		   "btnExtension":[0,0,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Command",
-		   "values":[
-			  "Command",
-			  "ConcreteCommand1",
-			  "Client",
-			  "Invoker",
-			  "Receiver"
-		   ],
-		   "btnExtension":[0,1,0,0,0],
-		   "counter": 1,
-		},
-		{//???/
-		   "name":"Interpreter",
-		   "values":[
-			  "Client",
-			  "Context",
-			  "AbstractExpression",
-			  "TerminalExpression",
-			  "NonterminalExpression"
-		   ],
-		   "btnExtension":[0,0,0,0,0],
-		   "counter": 1,
-		},
-		{///???
-		   "name":"Iterator",
-		   "values":[
-			  "Aggregate",
-			  "Client",
-			  "Iterator",
-			  "ConcreteAggregate1",
-			  "ConcreteIterator1"
-		   ],
-		   "btnExtension":[0,0,0,1,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Mediator",
-		   "values":[
-			  "Mediator",
-			  "Colleague",
-			  "ConcreteMediator",
-			  "ConcreteColleague1"
-		   ],
-		   "btnExtension":[0,0,0,1],
-		   "counter": 1,
-		},
-		{///???
-		   "name":"Memento",
-		   "values":[
-			  "Originator",
-			  "Memento",
-			  "Caretaker"
-		   ],
-		   "btnExtension":[0,0,0],
-		   "counter": 1,
-		},
-		{//???/
-		   "name":"Observer",
-		   "values":[
-			  "Subject",
-			  "Observer",
-			  "ConcreteSubject",
-			  "ConcreteObserver"
-		   ],
-		   "btnExtension":[0,0,0,0],
-		   "counter": 1,
-		},
-		{
-		   "name":"State",
-		   "values":[
-			  "Context",
-			  "State",
-			  "ConcreteState1"
-		   ],
-		   "btnExtension":[0,0,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Strategy",
-		   "values":[
-			  "Context",
-			  "Strategy",
-			  "ConcreteStrategy1"
-		   ],
-		   "btnExtension":[0,0,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Template Method",
-		   "values":[
-			  "AbstractClass",
-			  "ConcreteClass"
-		   ],
-		   "btnExtension":[0,0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Visitor",
-		   "values":[
-			  "Client",
-			  "Visitor",
-			  "ConcreteVisitor1",
-			  "ObjectStructure",
-			  "Element",
-			  "ConcreteElement1"
-		   ],
-		   "btnExtension":[0,0,1,0,0,1],
-		   "counter": 1,
-		}
-	 ];
-	
+		
 	protected render(): React.ReactNode {
 		const header = `Choose a Design Pattern and get the code. `;
 		
@@ -352,13 +103,14 @@ export class extensionWidget extends ReactWidget {
 			(document.getElementById("btn-get-code") as HTMLButtonElement).style.visibility = 'hidden';
 			 
 			//show the JSON values for the chosen key-pattern
-			var  index = extensionWidget.a.findIndex(x => x.name === extensionWidget.state.statePatternSelection);
-			console.log(index);
-			var values = extensionWidget.a[index]["values"];
-			var btnExtension = extensionWidget.a[index]["btnExtension"] ;
-			var counter = extensionWidget.a[index]["counter"] ;
+			var l = JSON.parse(JSON.stringify(data));
+			var values = l[extensionWidget.state.statePatternSelection]["values"];
+			
+			var btnExtension = l[extensionWidget.state.statePatternSelection]["btnExtension"] ;
+			extensionWidget.counter = [1,1,1,1,1,1,1,1,1,1];
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
 			for (var i=0;i< values.length;i++){
+				console.log(extensionWidget.counter[i]);
 				var row = table.insertRow(i);
 				var cell1 = row.insertCell(0);
 				var cell2 = row.insertCell(1);
@@ -379,14 +131,25 @@ export class extensionWidget extends ReactWidget {
 					t3.id = "btn"+ values[i];
 					cell3.appendChild(t3);
 					t3.addEventListener('click', (event) => {
-						this.buttonClick(table, ( event.target as Element).id, counter +1);
-						counter = counter + 1;
+						this.buttonClick(table, ( event.target as Element).id, extensionWidget.counter[i] +1);
+						extensionWidget.counter[i] = extensionWidget.counter[i] + 1;
+
 					});	
 
 				}
+
 			}
-			
-			   
+			row = table.insertRow(table.rows.length);
+			cell1 = row.insertCell(0);
+			var b = document.createElement("button");
+			b.id = "btnFinalize";
+			b.innerHTML = "Finally Get Code";
+			b.addEventListener('click', (_event) => {
+				var h = new HelloBackendServiceImpl();
+				alert( h.sayHelloTo("Anna"));
+				
+			});
+			cell1.appendChild(b);  
 
 		}else if (extensionWidget.state.stateURLproject=='Project URL' || extensionWidget.state.stateURLproject==""){
 			this.messageService.info('You need to enter the Theia URL of the project!');
@@ -400,6 +163,7 @@ export class extensionWidget extends ReactWidget {
     updateSelection(e:React.ChangeEvent<HTMLSelectElement>){
 		const key =e.currentTarget.name as keyof typeof extensionWidget.state;
 		extensionWidget.state[key]  = e.currentTarget.value;
+		
 		
 	}
 	 //update the state
@@ -431,4 +195,12 @@ export class extensionWidget extends ReactWidget {
 		string = string.replace(lastChar, counter.toString());
 		return string;
 	}
+
+	refresh(): void {
+		window. location. reload();
+	}
+
 }	
+
+
+
