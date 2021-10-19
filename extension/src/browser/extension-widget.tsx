@@ -137,6 +137,16 @@ export class extensionWidget extends ReactWidget {
 						t2.placeholder = key;
 						cell1.appendChild(t1);
 						cell2.appendChild(t2);
+						if(classes[key].extension==1){
+							var cell3 = row.insertCell(2);
+							var t3 = document.createElement("button");
+							t3.innerHTML = "+";
+							t3.id = "btn"+ key;
+							cell3.appendChild(t3);
+							//t3.addEventListener('click', (event) => {
+							//	this.buttonClick(table, ( event.target as Element).id);
+							//});	
+						}
 
 			});
 		}
