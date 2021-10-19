@@ -1,0 +1,163 @@
+{
+    "Abstract Factory":{
+        "values":{
+            "AbstractFactory":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "Concrete Factory1":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            },
+            "AbstractProduct1":{
+                "name":"",
+                "extension":1,
+                "classes":{
+                    "Product1":""
+                }
+            },
+            "Client":{
+                "name":"",
+                "extension":1
+            }
+        }
+    },
+    "Builder":{
+        "values":{
+            "Director":""
+        }
+    },
+    "Factroy Method":{
+        "values":{
+            "Director":""
+        }
+    },
+
+    
+    "Prototype":{
+        "values":{
+            "Director":""
+        }
+    },
+
+    "Singleton":{
+        "values":{
+            "Director":""
+        }
+    },
+
+    "Adapter":{
+        "values":{
+            "Director":""
+        }
+    },
+
+    "Bridge":{
+        "values":{
+            "Director":""
+        }
+    },
+
+    "Composite":{
+        "values":{
+            "Director":""
+        }
+    },
+
+    "Decorator":{
+        "values":{
+            "Director":""
+        }
+    },
+
+    "Facade":{
+        "values":{
+            "Director":""
+        }
+    },
+
+    "Flyweight":{
+        "values":{
+            "Director":""
+        }
+    },
+
+    "Proxy":{
+        "values":{
+            "Director":""
+        }
+    },
+
+
+    "Chain of Responsibility":{
+        "values":{
+            "Director":""
+        }
+    },
+
+    "Commande":{
+        "values":{
+            "Director":""
+        }
+    },
+    "Interpreter":{
+        "values":{
+            "Director":""
+        }
+    },
+    "Iterator":{
+        "values":{
+            "Director":""
+        }
+    },
+    "Mediator":{
+        "values":{
+            "Director":""
+        }
+    },
+    "Memento":{
+        "values":{
+            "Director":""
+        }
+    },
+    "Observer":{
+        "values":{
+            "Director":""
+        }
+    },
+    "State":{
+        "values":{
+            "Director":""
+        }
+    },
+    "Strategy":{
+        "values":{
+            "Director":""
+        }
+    },
+    "Template Method":{
+        "values":{
+            "Director":""
+        }
+    },
+    "Visitor":{
+        "values":{
+            "Director":""
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
