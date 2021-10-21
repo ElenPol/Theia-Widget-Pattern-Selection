@@ -8,43 +8,122 @@
                     "Concrete Factory1":{
                         "name":"",
                         "extension":1
+                    },
+                    "Concrete Factory2":{
+                        "name":"",
+                        "extension":1
                     }
                 }
             },
-            "AbstractProduct1":{
+            "AbstractProductA":{
                 "name":"",
                 "extension":1,
                 "classes":{
-                    "Product1":""
+                    "ProductA1":{
+                        "name":"",
+                        "extension":1
+                    },
+                    "ProductA2":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            },
+            "AbstractProductB":{
+                "name":"",
+                "extension":1,
+                "classes":{
+                    "ProductB1":{
+                        "name":"",
+                        "extension":1
+                    },
+                    "ProductB2":{
+                        "name":"",
+                        "extension":1
+                    }
                 }
             },
             "Client":{
                 "name":"",
-                "extension":1
+                "extension":0
             }
         }
     },
     "Builder":{
         "values":{
-            "Director":""
+            "Director":{
+                "name":"",
+                "extension":0
+            },
+            "Builder":{
+                "name":"",
+                "extension":0 ,
+                "classes":{
+                    "ConcreteBuilder":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            },
+            "Product":{
+                "name":"",
+                "extension":0
+            }
         }
     },
     "Factroy Method":{
         "values":{
-            "Director":""
+            "Creator":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteCreatorA":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            },
+            "Product":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteProductA":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            }
         }
     },
-
-    
     "Prototype":{
         "values":{
-            "Director":""
+            "Client":{
+                "name":"",
+                "extension":0
+            },
+            "Prototype":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcretePrototype1":{
+                        "name":"",
+                        "extension":1
+                    },
+                    "ConcretePrototype2":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            }
         }
     },
 
     "Singleton":{
         "values":{
-            "Director":""
+            "Singleton":{
+                "name":"",
+                "extension":0
+            }
         }
     },
 

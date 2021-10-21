@@ -100,15 +100,15 @@ export class extensionWidget extends ReactWidget {
 			//show the JSON values for the chosen key-pattern
 			var values = extensionWidget.data[extensionWidget.state.statePatternSelection].values; //data[extensionWidget.state.statePatternSelection];
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
-			Object.keys(values).forEach(function(key, i){
-				var row = table.insertRow(i);
+			Object.keys(values).forEach((key) =>{
+				var row = table.insertRow(table.rows.length);
 				var cell1 = row.insertCell(0);
 				var cell2 = row.insertCell(1);
 				var t1 = document.createElement("label");
-				t1.id = "label"+ i;
+				t1.id = "label"+ table.rows.length;
 				t1.innerHTML = key;
 				var t2 = document.createElement("input");
-				t2.id = "txtbox"+ i;
+				t2.id = "txtbox"+ table.rows.length;
 				t2.placeholder = key;
 				t2.autocomplete = "off";
 				cell1.appendChild(t1);
@@ -119,13 +119,13 @@ export class extensionWidget extends ReactWidget {
 					t3.innerHTML = "+";
 					t3.id = "btn"+ key;
 					cell3.appendChild(t3);
-					//t3.addEventListener('click', (event) => {
-					//	this.buttonClick(table, ( event.target as Element).id);
-					//});	
+					t3.addEventListener('click', (event) => {
+						this.buttonClick(table, ( event.target as Element).id, values);
+					});	
 				}
 				var classes = values[key]["classes"];
 				if (classes != null){
-					Object.keys(classes).forEach(function(key){
+					Object.keys(classes).forEach((key) =>{
 						var row = table.insertRow(table.rows.length);
 						var cell1 = row.insertCell(0);
 						var cell2 = row.insertCell(1); 
@@ -143,9 +143,9 @@ export class extensionWidget extends ReactWidget {
 							t3.innerHTML = "+";
 							t3.id = "btn"+ key;
 							cell3.appendChild(t3);
-							//t3.addEventListener('click', (event) => {
-							//	this.buttonClick(table, ( event.target as Element).id);
-							//});	
+							t3.addEventListener('click', (event) => {
+								this.buttonClick(table, ( event.target as Element).id, classes);
+							});	
 						}
 
 			});
@@ -174,15 +174,22 @@ export class extensionWidget extends ReactWidget {
 		
 	}
 	//when button is clicked adds one label and one input of the specific class that the user wants to insert one more 
-	buttonClick (table: HTMLTableElement, value: string): void {
-	
+	buttonClick (table: HTMLTableElement, value: string, values: string): void {
+		var row = table.insertRow(table.rows.length);
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1); 
+		var t1 = document.createElement("label");
+		this.updateLabel(value.substr(3,), values);
+		t1.innerHTML = "";
+		t1.id = "label"+table.rows.length;
+		var t2 = document.createElement("input");
+		t2.id = "txtbox"+table.rows.length;
+		t2.placeholder = "";
+		cell1.appendChild(t1);
+		cell2.appendChild(t2);
 	}
 
-	updateLabelValue(string : string, counter: number): string {
-		let lastChar = string.slice(-1);
-		string = string.replace(lastChar, counter.toString());
-		return string;
-	}
+	
 }	
 
 
