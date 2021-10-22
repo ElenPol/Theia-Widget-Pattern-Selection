@@ -135,19 +135,86 @@
 
     "Bridge":{
         "values":{
-            "Director":""
+            "Abstraction":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "RefinedAbstraction":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            },
+            "Client":{
+                "name":"",
+                "extension":0
+            },
+            "Implementor":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteImplementorA":{
+                        "name":"",
+                        "extension":1
+                    },
+                    "ConcreteImplementorB":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            }
         }
     },
 
     "Composite":{
         "values":{
-            "Director":""
+            "Client":{
+                "name":"",
+                "extension":0
+            },
+            "Component":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "Leaf":{
+                        "name":"",
+                        "extension":1
+                    },
+                    "Composite":{
+                        "name":"",
+                        "extension":0
+                    }
+                }
+            }
         }
     },
 
     "Decorator":{
         "values":{
-            "Director":""
+            "Component":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteComponent":{
+                        "name":"",
+                        "extension":0
+                    },
+                    "Decorator":{
+                        "name":"",
+                        "extension":0,
+                        "classes":{
+                            "ConcreteDecoratorA":{
+                                "name":"",
+                                "extension":1
+                            },
+                            "ConcreteDecoratorB":{
+                                "name":"",
+                                "extension":1
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
 
@@ -156,74 +223,311 @@
             "Director":""
         }
     },
-
     "Flyweight":{
         "values":{
-            "Director":""
+            "FlyweightFactory":{
+                "name":"",
+                "extension":0
+            },
+            "Flyweight":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteFlyweight1":{
+                        "name":"",
+                        "extension":1
+                    },
+                    "UnsharedConcreteFlyweight1":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            },
+            "Client":{
+                "name":"",
+                "extension":0
+            }
         }
     },
 
     "Proxy":{
         "values":{
-            "Director":""
+            "Client":{
+                "name":"",
+                "extension":0
+            },
+            "Subject":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "RealSubject":{
+                        "name":"",
+                        "extension":0
+                    },
+                    "Proxy":{
+                        "name":"",
+                        "extension":0
+                    }
+                }
+            }
         }
     },
-
-
     "Chain of Responsibility":{
         "values":{
-            "Director":""
+            "Client":{
+                "name":"",
+                "extension":0
+            },
+            "Handler":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteHandler1":{
+                        "name":"",
+                        "extension":1
+                    },
+                    "ConcreteHandler2":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            }
         }
     },
 
-    "Commande":{
+    "Command":{
         "values":{
-            "Director":""
+            "Client":{
+                "name":"",
+                "extension":0
+            },
+            "Receiver":{
+                "name":"",
+                "extension":1
+            },
+            "Invoker":{
+                "name":"",
+                "extension":0
+            },
+            "Command":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteCommand":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            }
         }
     },
     "Interpreter":{
         "values":{
-            "Director":""
+            "Client":{
+                "name":"",
+                "extension":0
+            },
+            "Context":{
+                "name":"",
+                "extension":0
+            },
+            "AbstractExpression":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "TerminalExpression1":{
+                        "name":"",
+                        "extension":1
+                    },
+                    "NonterminalExpression":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            }
         }
     },
     "Iterator":{
         "values":{
-            "Director":""
+            "Client":{
+                "name":"",
+                "extension":0
+            },
+            "Aggregate":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteAggregate1":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            },
+            "Iterator":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteIterator1":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            }
         }
     },
     "Mediator":{
         "values":{
-            "Director":""
+            "Mediator":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteMediator":{
+                        "name":"",
+                        "extension":0
+                    }
+                }
+            },
+            "Colleague":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteColleague1":{
+                        "name":"",
+                        "extension":1
+                    },
+                    "ConcreteColleague2":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            }
         }
     },
     "Memento":{
         "values":{
-            "Director":""
+            "Originator":{
+                "name":"",
+                "extension":0
+            },
+            "Memento":{
+                "name":"",
+                "extension":0
+            },
+            "Caretaker":{
+                "name":"",
+                "extension":0
+            }
         }
     },
     "Observer":{
         "values":{
-            "Director":""
+            "Subject":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteSubject":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            },
+            "Observer":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteObserver":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            }
         }
     },
     "State":{
         "values":{
-            "Director":""
+            "Context":{
+                "name":"",
+                "extension":0
+            },
+            "State":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteStateA":{
+                        "name":"",
+                        "extension":1
+                    },
+                    "ConcreteStateB":{
+                        "name":"",
+                        "extension":1
+                    }
+
+                }
+            }
         }
     },
     "Strategy":{
         "values":{
-            "Director":""
+            "Context":{
+                "name":"",
+                "extension":0
+            },
+            "Strategy":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "name":"",
+                    "extension":0,
+                    "classes":{
+                        "ConcreteStrategyA":{
+                            "name":"",
+                            "extension":1
+                        },
+                        "ConcreteStrategyB":{
+                            "name":"",
+                            "extension":1
+                        }
+
+                    }
+                }
+            }
+
         }
     },
     "Template Method":{
         "values":{
-            "Director":""
+            "AbstractClass":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "ConcreteClass":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            }
         }
     },
     "Visitor":{
         "values":{
-            "Director":""
+            "Node":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "AssignmetNode":{
+                        "name":"",
+                        "extension":1
+                    },
+                    "VariableRefNode":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            },
+            "Program":{
+                "name":"",
+                "extension":0
+            }
         }
     }
 }
