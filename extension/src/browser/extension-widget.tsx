@@ -123,8 +123,8 @@ export class extensionWidget extends ReactWidget {
 						this.buttonClick(table, ( event.target as Element).id, values);
 					});	
 				}
-				var classes = values[key]["classes"];
-				if (classes != null){
+				if (("classes" in values[key])== true){
+					var classes = values[key]["classes"];
 					Object.keys(classes).forEach((key) =>{
 						var row = table.insertRow(table.rows.length);
 						var cell1 = row.insertCell(0);
