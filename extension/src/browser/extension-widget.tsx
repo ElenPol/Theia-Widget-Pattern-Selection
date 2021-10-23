@@ -42,10 +42,7 @@ export class extensionWidget extends ReactWidget {
 		
 		return <div id='widget-container'>
 		<AlertMessage type='INFO' header={header} />
-		<br /> 
-		<label id="label-URL-project">Provide the Projects's URL</label>
-		<input id="URL-project" onChange={this.updateInput} placeholder='Project URL' name="stateURLproject"></input>
-		<br />
+		
 		<div id='issues'>
 				<br />
 				<select id="drop-down-patterns" onChange={this.updateSelection} name="statePatternSelection">
@@ -99,7 +96,7 @@ export class extensionWidget extends ReactWidget {
 	}
 	
     protected runprocess(): void {
-		if (extensionWidget.state.statePatternSelection!="Choose_pattern" && extensionWidget.state.statePatternSelection!="" && extensionWidget.state.stateURLproject!="" && extensionWidget.state.stateURLproject!='Project URL'){
+		if (extensionWidget.state.statePatternSelection!="Choose_pattern" && extensionWidget.state.statePatternSelection!=""){
 			(document.getElementById("btn-get-code") as HTMLButtonElement).style.visibility = 'hidden';
 			 
 			//show the JSON values for the chosen key-pattern
@@ -110,7 +107,7 @@ export class extensionWidget extends ReactWidget {
 			extensionWidget.counter = [1,1,1,1,1,1,1,1,1,1];
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
 			for (var i=0;i< values.length;i++){
-				console.log(extensionWidget.counter[i]);
+				//console.log(extensionWidget.counter[i]);
 				var row = table.insertRow(i);
 				var cell1 = row.insertCell(0);
 				var cell2 = row.insertCell(1);
@@ -146,14 +143,11 @@ export class extensionWidget extends ReactWidget {
 			b.innerHTML = "Finally Get Code";
 			b.addEventListener('click', (_event) => {
 				var h = new HelloBackendServiceImpl();
-				alert( h.sayHelloTo("Anna"));
+				 h.sayHelloTo();
 				
 			});
 			cell1.appendChild(b);  
 
-		}else if (extensionWidget.state.stateURLproject=='Project URL' || extensionWidget.state.stateURLproject==""){
-			this.messageService.info('You need to enter the Theia URL of the project!');
-		
 		}else{
 			this.messageService.info('You need to choose a software pattern!');
 		}
