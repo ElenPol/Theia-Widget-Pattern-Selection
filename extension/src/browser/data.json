@@ -15,29 +15,29 @@
                     }
                 }
             },
-            "AbstractProductA":{
+            "AbstractProduct1":{
                 "name":"",
                 "extension":1,
                 "classes":{
-                    "ProductA1":{
+                    "Product1.1":{
                         "name":"",
                         "extension":1
                     },
-                    "ProductA2":{
+                    "Product1.2":{
                         "name":"",
                         "extension":1
                     }
                 }
             },
-            "AbstractProductB":{
+            "AbstractProduct2":{
                 "name":"",
                 "extension":1,
                 "classes":{
-                    "ProductB1":{
+                    "Product2.1":{
                         "name":"",
                         "extension":1
                     },
-                    "ProductB2":{
+                    "Product2.2":{
                         "name":"",
                         "extension":1
                     }
@@ -59,25 +59,25 @@
                 "name":"",
                 "extension":0 ,
                 "classes":{
-                    "ConcreteBuilder":{
+                    "ConcreteBuilder1":{
                         "name":"",
                         "extension":1
                     }
                 }
             },
-            "Product":{
+            "Product1":{
                 "name":"",
-                "extension":0
+                "extension":1
             }
         }
     },
-    "Factroy Method":{
+    "Factory Method":{
         "values":{
             "Creator":{
                 "name":"",
                 "extension":0,
                 "classes":{
-                    "ConcreteCreatorA":{
+                    "ConcreteCreator1":{
                         "name":"",
                         "extension":1
                     }
@@ -87,7 +87,7 @@
                 "name":"",
                 "extension":0,
                 "classes":{
-                    "ConcreteProductA":{
+                    "ConcreteProduct1":{
                         "name":"",
                         "extension":1
                     }
@@ -129,7 +129,24 @@
 
     "Adapter":{
         "values":{
-            "Director":""
+            "Client":{
+                "name":"",
+                "extension":0
+            },
+            "Target":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "Adapter1":{
+                        "name":"",
+                        "extension":1
+                    }
+                }
+            },
+            "Adaptee":{
+                "name":"",
+                "extension":0
+            }
         }
     },
 
@@ -139,7 +156,7 @@
                 "name":"",
                 "extension":0,
                 "classes":{
-                    "RefinedAbstraction":{
+                    "RefinedAbstraction1":{
                         "name":"",
                         "extension":1
                     }
@@ -153,11 +170,11 @@
                 "name":"",
                 "extension":0,
                 "classes":{
-                    "ConcreteImplementorA":{
+                    "ConcreteImplementor1":{
                         "name":"",
                         "extension":1
                     },
-                    "ConcreteImplementorB":{
+                    "ConcreteImplementor2":{
                         "name":"",
                         "extension":1
                     }
@@ -176,7 +193,7 @@
                 "name":"",
                 "extension":0,
                 "classes":{
-                    "Leaf":{
+                    "Leaf1":{
                         "name":"",
                         "extension":1
                     },
@@ -195,19 +212,19 @@
                 "name":"",
                 "extension":0,
                 "classes":{
-                    "ConcreteComponent":{
+                    "ConcreteComponent1":{
                         "name":"",
-                        "extension":0
+                        "extension":1
                     },
                     "Decorator":{
                         "name":"",
                         "extension":0,
                         "classes":{
-                            "ConcreteDecoratorA":{
+                            "ConcreteDecorator1":{
                                 "name":"",
                                 "extension":1
                             },
-                            "ConcreteDecoratorB":{
+                            "ConcreteDecorator2":{
                                 "name":"",
                                 "extension":1
                             }
@@ -301,7 +318,7 @@
                 "name":"",
                 "extension":0
             },
-            "Receiver":{
+            "Receiver1":{
                 "name":"",
                 "extension":1
             },
@@ -313,7 +330,7 @@
                 "name":"",
                 "extension":0,
                 "classes":{
-                    "ConcreteCommand":{
+                    "ConcreteCommand1":{
                         "name":"",
                         "extension":1
                     }
@@ -339,7 +356,7 @@
                         "name":"",
                         "extension":1
                     },
-                    "NonterminalExpression":{
+                    "NonterminalExpression1":{
                         "name":"",
                         "extension":1
                     }
@@ -425,7 +442,7 @@
                 "name":"",
                 "extension":0,
                 "classes":{
-                    "ConcreteSubject":{
+                    "ConcreteSubject1":{
                         "name":"",
                         "extension":1
                     }
@@ -435,7 +452,7 @@
                 "name":"",
                 "extension":0,
                 "classes":{
-                    "ConcreteObserver":{
+                    "ConcreteObserver1":{
                         "name":"",
                         "extension":1
                     }
@@ -453,11 +470,11 @@
                 "name":"",
                 "extension":0,
                 "classes":{
-                    "ConcreteStateA":{
+                    "ConcreteState1":{
                         "name":"",
                         "extension":1
                     },
-                    "ConcreteStateB":{
+                    "ConcreteState2":{
                         "name":"",
                         "extension":1
                     }
@@ -479,11 +496,11 @@
                     "name":"",
                     "extension":0,
                     "classes":{
-                        "ConcreteStrategyA":{
+                        "ConcreteStrategy1":{
                             "name":"",
                             "extension":1
                         },
-                        "ConcreteStrategyB":{
+                        "ConcreteStrategy2":{
                             "name":"",
                             "extension":1
                         }
@@ -500,7 +517,7 @@
                 "name":"",
                 "extension":0,
                 "classes":{
-                    "ConcreteClass":{
+                    "ConcreteClass1":{
                         "name":"",
                         "extension":1
                     }
@@ -510,23 +527,45 @@
     },
     "Visitor":{
         "values":{
-            "Node":{
+            "Client":{
+                "name":"",
+                "extension":0
+            },
+            "Visitor":{
                 "name":"",
                 "extension":0,
                 "classes":{
-                    "AssignmetNode":{
+                    "ConcreteVisitor1":{
                         "name":"",
                         "extension":1
                     },
-                    "VariableRefNode":{
+                    "ConcreteVisitor2":{
                         "name":"",
                         "extension":1
                     }
                 }
             },
-            "Program":{
+            "ObjectStructure":{
                 "name":"",
                 "extension":0
+            },
+            "Element":{
+                "name":"",
+                "extension":0,
+                "classes":{
+                    "name":"",
+                    "extension":0,
+                    "classes":{
+                        "ConcreteElement1":{
+                            "name":"",
+                            "extension":1
+                        },
+                        "ConcreteElement2":{
+                            "name":"",
+                            "extension":1
+                        }
+                    }
+                }
             }
         }
     }

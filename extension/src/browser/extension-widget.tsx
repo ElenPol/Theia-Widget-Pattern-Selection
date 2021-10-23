@@ -3,7 +3,6 @@ import { injectable, postConstruct, inject } from 'inversify';
 import { AlertMessage } from '@theia/core/lib/browser/widgets/alert-message';
 import { ReactWidget } from '@theia/core/lib/browser/widgets/react-widget';
 import { MessageService } from '@theia/core';
-//import { workspace} from '@theia/plugin';
 import data from './data.json';
 
 
@@ -101,18 +100,7 @@ export class extensionWidget extends ReactWidget {
 			var values = extensionWidget.data[extensionWidget.state.statePatternSelection].values; //data[extensionWidget.state.statePatternSelection];
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
 			Object.keys(values).forEach((key) =>{
-				var row = table.insertRow(table.rows.length);
-				var cell1 = row.insertCell(0);
-				var cell2 = row.insertCell(1);
-				var t1 = document.createElement("label");
-				t1.id = "label"+ table.rows.length;
-				t1.innerHTML = key;
-				var t2 = document.createElement("input");
-				t2.id = "txtbox"+ table.rows.length;
-				t2.placeholder = key;
-				t2.autocomplete = "off";
-				cell1.appendChild(t1);
-				cell2.appendChild(t2);
+				var row = this.insertCells(table, key)
 				if(values[key].extension==1){
 					var cell3 = row.insertCell(2);
 					var t3 = document.createElement("button");
@@ -123,20 +111,10 @@ export class extensionWidget extends ReactWidget {
 						this.buttonClick(table, ( event.target as Element).id, values);
 					});	
 				}
-				if (("classes" in values[key])== true){
+				if (("classes" in values[key]) == true){
 					var classes = values[key]["classes"];
 					Object.keys(classes).forEach((key) =>{
-						var row = table.insertRow(table.rows.length);
-						var cell1 = row.insertCell(0);
-						var cell2 = row.insertCell(1); 
-						var t1 = document.createElement("label");
-						t1.innerHTML = key;
-						t1.id = "label"+table.rows.length;
-						var t2 = document.createElement("input");
-						t2.id = "txtbox"+table.rows.length;
-						t2.placeholder = key;
-						cell1.appendChild(t1);
-						cell2.appendChild(t2);
+						var row = this.insertCells(table, key);
 						if(classes[key].extension==1){
 							var cell3 = row.insertCell(2);
 							var t3 = document.createElement("button");
@@ -173,23 +151,46 @@ export class extensionWidget extends ReactWidget {
 		extensionWidget.state[key]  = e.currentTarget.value;
 		
 	}
+	insertCells(table: HTMLTableElement, key: string){
+		var row = table.insertRow(table.rows.length);
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var t1 = document.createElement("label");
+		t1.id = "label"+ table.rows.length;
+		t1.innerHTML = key;
+		var t2 = document.createElement("input");
+		t2.id = "txtbox"+ table.rows.length;
+		t2.placeholder = key;
+		cell1.appendChild(t1);
+		cell2.appendChild(t2);
+		return row;
+	}
 	//when button is clicked adds one label and one input of the specific class that the user wants to insert one more 
 	buttonClick (table: HTMLTableElement, value: string, values: string): void {
 		var row = table.insertRow(table.rows.length);
 		var cell1 = row.insertCell(0);
 		var cell2 = row.insertCell(1); 
 		var t1 = document.createElement("label");
-		this.updateLabel(value.substr(3,), values);
-		t1.innerHTML = "";
+		if(extensionWidget.state.statePatternSelection=="Abstract Factory"){
+
+		}else if(extensionWidget.state.statePatternSelection=="Abstract Factory"){
+
+		}
+		t1.innerHTML = this.updateLabel(value.substr(3,));
 		t1.id = "label"+table.rows.length;
 		var t2 = document.createElement("input");
 		t2.id = "txtbox"+table.rows.length;
-		t2.placeholder = "";
+		t2.placeholder = this.updateLabel(value.substr(3,));;
 		cell1.appendChild(t1);
 		cell2.appendChild(t2);
 	}
 
-	
+	updateLabel(value: string){
+		if (value.includes('.')){
+			return value.substring(0,value.length-2) + '.' + String.fromCharCode(value.slice(-1).charCodeAt(0)+1);
+		}
+		return value.substring(0,value.length-2) + String.fromCharCode(value.slice(-1).charCodeAt(0)+1);
+	}
 }	
 
 
