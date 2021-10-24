@@ -3,9 +3,8 @@ import { injectable, postConstruct, inject } from 'inversify';
 import { AlertMessage } from '@theia/core/lib/browser/widgets/alert-message';
 import { ReactWidget } from '@theia/core/lib/browser/widgets/react-widget';
 import { MessageService } from '@theia/core';
-import { integer } from 'vscode-languageserver-types';
 import data from './data1.json';
-import { HelloBackendServiceImpl } from '../node/hello-backend-service';
+import { HelloBackendService } from '../common/protocol';
 
 
 @injectable()
@@ -22,6 +21,9 @@ export class extensionWidget extends ReactWidget {
 	
     @inject(MessageService)
     protected readonly messageService!: MessageService;
+	@inject(HelloBackendService)
+	protected readonly helloBackendService: HelloBackendService;
+    
 
 	@postConstruct()
 	protected async init(): Promise < void> {
@@ -42,7 +44,6 @@ export class extensionWidget extends ReactWidget {
 		
 		return <div id='widget-container'>
 		<AlertMessage type='INFO' header={header} />
-		
 		<div id='issues'>
 				<br />
 				<select id="drop-down-patterns" onChange={this.updateSelection} name="statePatternSelection">
@@ -107,7 +108,7 @@ export class extensionWidget extends ReactWidget {
 			extensionWidget.counter = [1,1,1,1,1,1,1,1,1,1];
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
 			for (var i=0;i< values.length;i++){
-				//console.log(extensionWidget.counter[i]);
+				console.log(extensionWidget.counter[i]);
 				var row = table.insertRow(i);
 				var cell1 = row.insertCell(0);
 				var cell2 = row.insertCell(1);
@@ -142,12 +143,12 @@ export class extensionWidget extends ReactWidget {
 			b.id = "btnFinalize";
 			b.innerHTML = "Finally Get Code";
 			b.addEventListener('click', (_event) => {
-				var h = new HelloBackendServiceImpl();
-				 h.sayHelloTo();
-				
+				//var h = new HelloBackendServiceImpl();
+				//alert( h.sayHelloTo("Anna"));
+				this.helloBackendService.sayHelloTo("Anna").then(r=>console.log(r));
 			});
 			cell1.appendChild(b);  
-
+		
 		}else{
 			this.messageService.info('You need to choose a software pattern!');
 		}
@@ -167,7 +168,7 @@ export class extensionWidget extends ReactWidget {
 		
 	}
 	//when button is clicked adds one label and one input of the specific class that the user wants to insert one more 
-	buttonClick (table: HTMLTableElement, value: string, counter: integer): void {
+	buttonClick (table: HTMLTableElement, value: string, counter: number): void {
 		table = document.getElementById('show_pattern_table') as HTMLTableElement;
 		var size = table.rows.length;	
 		var row = table.insertRow(size);
@@ -184,7 +185,7 @@ export class extensionWidget extends ReactWidget {
 		cell2.appendChild(t2);
 	}
 
-	updateLabelValue(string : string, counter: integer): string {
+	updateLabelValue(string : string, counter: number): string {
 		let lastChar = string.slice(-1);
 		string = string.replace(lastChar, counter.toString());
 		return string;

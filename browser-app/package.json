@@ -10,15 +10,11 @@
     "@theia/messages": "latest",
     "@theia/monaco": "latest",
     "@theia/navigator": "latest",
-    "@theia/plugin-dev": "latest",
-    "@theia/plugin-ext": "latest",
     "@theia/preferences": "latest",
     "@theia/process": "latest",
     "@theia/terminal": "latest",
     "@theia/workspace": "latest",
-    "browserify-fs": "^1.0.0",
-    "extension": "0.0.0",
-    "walk": "^2.3.15"
+    "extension": "0.0.0"
   },
   "devDependencies": {
     "@theia/cli": "latest"
