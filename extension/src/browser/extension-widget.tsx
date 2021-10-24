@@ -108,7 +108,7 @@ export class extensionWidget extends ReactWidget {
 			extensionWidget.counter = [1,1,1,1,1,1,1,1,1,1];
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
 			for (var i=0;i< values.length;i++){
-				console.log(extensionWidget.counter[i]);
+				//console.log(extensionWidget.counter[i]);
 				var row = table.insertRow(i);
 				var cell1 = row.insertCell(0);
 				var cell2 = row.insertCell(1);
@@ -143,9 +143,10 @@ export class extensionWidget extends ReactWidget {
 			b.id = "btnFinalize";
 			b.innerHTML = "Finally Get Code";
 			b.addEventListener('click', (_event) => {
-				//var h = new HelloBackendServiceImpl();
-				//alert( h.sayHelloTo("Anna"));
-				this.helloBackendService.sayHelloTo("Anna").then(r=>console.log(r));
+								
+				var getUrl = window.location.href;
+            	this.helloBackendService.sayHelloTo(getUrl);
+				
 			});
 			cell1.appendChild(b);  
 		

@@ -7,32 +7,43 @@ export class HelloBackendServiceImpl implements HelloBackendService {
 
     @inject(FileSearchService)
     protected readonly fileSearchService!:FileSearchService;
-    
-    sayHelloTo(name: string): Promise<string> {
-        if (typeof window !== "undefined") {
-            var getUrl = window.location.pathname;
-            console.log(getUrl);
-        }
         
-        /*var j = JSON.parse(JSON.stringify(getUrl));
-        console.log(j["href"]);
-        var url = (j["href"].toString());
+    sayHelloTo(url: string): void {
+        //string manipulation to get the right form of url string
         var lastL = url.lastIndexOf("c:");
-        var testFolder = url.substr(lastL);*/
-        
+        var testFolder = url.substr(lastL+3);
+        var splitted = testFolder.split("/");
+        var rootUri = "C:";
+        splitted.forEach(function (value) {
+            rootUri = rootUri + "\\" + value;
+          }); 
+        //console.log(rootUri);
 
+        //prepare file-search, define search pattern
         const roots: FileSearchService.RootOptions = {};
-        const rootUri = "C:\\Users\\test\\Downloads\\src\\src";
+        //const rootUri = "C:\\Users\\test\\Downloads\\src\\src";
         roots[rootUri] = {};
         const opts: FileSearchService.Options = {
             rootOptions: roots
         };
         opts.includePatterns = ['**/*.java'];
-
+       
+        //start file-search, create list with file names
+        let fileList: Array<string> = [];
         this.fileSearchService.find('',opts).then((res)=>{
-		    console.log("File: " + res);
+		    res.forEach(function (str2){
+                var lastW = str2.lastIndexOf("/");
+                var file = str2.substr(lastW+1);
+                file = file.substr(0, file.indexOf("."));
+                fileList.push(file);
+                console.log(file);
+            });
 		});
         
-        return new Promise<string>(resolve => resolve('Hello ' + name));
+        
+        //
+
+
+    
     }
 }
