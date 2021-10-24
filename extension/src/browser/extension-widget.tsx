@@ -3,8 +3,10 @@ import { injectable, postConstruct, inject } from 'inversify';
 import { AlertMessage } from '@theia/core/lib/browser/widgets/alert-message';
 import { ReactWidget } from '@theia/core/lib/browser/widgets/react-widget';
 import { MessageService } from '@theia/core';
-import data from './data1.json';
+
 import { HelloBackendService } from '../common/protocol';
+import data from './data.json';
+
 
 
 @injectable()
@@ -36,9 +38,9 @@ export class extensionWidget extends ReactWidget {
 	}
 	
 	static setState: any;
-	static counter: number[];
-	
-		
+
+	static data = JSON.parse(JSON.stringify(data));
+
 	protected render(): React.ReactNode {
 		const header = `Choose a Design Pattern and get the code. `;
 		
@@ -87,11 +89,8 @@ export class extensionWidget extends ReactWidget {
 				<br /> 
 				<div id="result">
 					<table id="show_pattern_table">
-
 					</table>
-					
 				</div>
-				
 			</div>
 			</div>
 	}
@@ -99,46 +98,42 @@ export class extensionWidget extends ReactWidget {
     protected runprocess(): void {
 		if (extensionWidget.state.statePatternSelection!="Choose_pattern" && extensionWidget.state.statePatternSelection!=""){
 			(document.getElementById("btn-get-code") as HTMLButtonElement).style.visibility = 'hidden';
-			 
-			//show the JSON values for the chosen key-pattern
-			var l = JSON.parse(JSON.stringify(data));
-			var values = l[extensionWidget.state.statePatternSelection]["values"];
 			
-			var btnExtension = l[extensionWidget.state.statePatternSelection]["btnExtension"] ;
-			extensionWidget.counter = [1,1,1,1,1,1,1,1,1,1];
+			//show the JSON values for the chosen key-pattern
+			var values = extensionWidget.data[extensionWidget.state.statePatternSelection].values; //data[extensionWidget.state.statePatternSelection];
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
-			for (var i=0;i< values.length;i++){
-				//console.log(extensionWidget.counter[i]);
-				var row = table.insertRow(i);
-				var cell1 = row.insertCell(0);
-				var cell2 = row.insertCell(1);
-				var t1 = document.createElement("label");
-				t1.innerHTML = values[i];
-				t1.id = "label"+i;
-				var t2 = document.createElement("input");
-				t2.id = "txtbox"+i;
-				t2.placeholder = values[i];
-				cell1.appendChild(t1);
-				//cell1.style.width = "200px";
-				cell2.appendChild(t2);
-				//cell2.style.width = "200px";
-				if(btnExtension[i]==1){
+			Object.keys(values).forEach((key) =>{
+				var row = this.insertCells(table, key);
+				if(values[key].extension==1){
 					var cell3 = row.insertCell(2);
 					var t3 = document.createElement("button");
 					t3.innerHTML = "+";
-					t3.id = "btn"+ values[i];
+					t3.id = "btn"+ key;
 					cell3.appendChild(t3);
 					t3.addEventListener('click', (event) => {
-						this.buttonClick(table, ( event.target as Element).id, extensionWidget.counter[i] +1);
-						extensionWidget.counter[i] = extensionWidget.counter[i] + 1;
-
+						this.buttonClick(table, ( event.target as Element).id, values);
 					});	
-
 				}
+				if (("classes" in values[key]) == true){
+					var classes = values[key]["classes"];
+					Object.keys(classes).forEach((key) =>{
+						var row = this.insertCells(table, key);
+						if(classes[key].extension==1){
+							var cell3 = row.insertCell(2);
+							var t3 = document.createElement("button");
+							t3.innerHTML = "+";
+							t3.id = "btn"+ key;
+							cell3.appendChild(t3);
+							t3.addEventListener('click', (event) => {
+								this.buttonClick(table, ( event.target as Element).id, classes);
+							});	
+						}
 
-			}
-			row = table.insertRow(table.rows.length);
-			cell1 = row.insertCell(0);
+					});
+				}
+			});
+			var rowN = table.insertRow(table.rows.length);
+			var cell = rowN.insertCell(0);
 			var b = document.createElement("button");
 			b.id = "btnFinalize";
 			b.innerHTML = "Finally Get Code";
@@ -148,7 +143,7 @@ export class extensionWidget extends ReactWidget {
             	this.helloBackendService.sayHelloTo(getUrl);
 				
 			});
-			cell1.appendChild(b);  
+			cell.appendChild(b);  
 		
 		}else{
 			this.messageService.info('You need to choose a software pattern!');
@@ -168,28 +163,45 @@ export class extensionWidget extends ReactWidget {
 		extensionWidget.state[key]  = e.currentTarget.value;
 		
 	}
-	//when button is clicked adds one label and one input of the specific class that the user wants to insert one more 
-	buttonClick (table: HTMLTableElement, value: string, counter: number): void {
-		table = document.getElementById('show_pattern_table') as HTMLTableElement;
-		var size = table.rows.length;	
-		var row = table.insertRow(size);
+	insertCells(table: HTMLTableElement, key: string){
+		var row = table.insertRow(table.rows.length);
 		var cell1 = row.insertCell(0);
 		var cell2 = row.insertCell(1);
 		var t1 = document.createElement("label");
-		t1.id = "label"+(size);
-		value = this.updateLabelValue(value.substr(3,), counter);
-		t1.innerHTML = value;
+		t1.id = "label"+ table.rows.length;
+		t1.innerHTML = key;
 		var t2 = document.createElement("input");
-		t2.id = "txtbox"+(size);
-		t2.placeholder = value;
+		t2.id = "txtbox"+ table.rows.length;
+		t2.placeholder = key;
+		cell1.appendChild(t1);
+		cell2.appendChild(t2);
+		return row;
+	}
+	//when button is clicked adds one label and one input of the specific class that the user wants to insert one more 
+	buttonClick (table: HTMLTableElement, value: string, values: string): void {
+		var row = table.insertRow(table.rows.length);
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1); 
+		var t1 = document.createElement("label");
+		if(extensionWidget.state.statePatternSelection=="Abstract Factory"){
+
+		}else if(extensionWidget.state.statePatternSelection=="Abstract Factory"){
+
+		}
+		t1.innerHTML = this.updateLabel(value.substr(3,));
+		t1.id = "label"+table.rows.length;
+		var t2 = document.createElement("input");
+		t2.id = "txtbox"+table.rows.length;
+		t2.placeholder = this.updateLabel(value.substr(3,));;
 		cell1.appendChild(t1);
 		cell2.appendChild(t2);
 	}
 
-	updateLabelValue(string : string, counter: number): string {
-		let lastChar = string.slice(-1);
-		string = string.replace(lastChar, counter.toString());
-		return string;
+	updateLabel(value: string){
+		if (value.includes('.')){
+			return value.substring(0,value.length-2) + '.' + String.fromCharCode(value.slice(-1).charCodeAt(0)+1);
+		}
+		return value.substring(0,value.length-2) + String.fromCharCode(value.slice(-1).charCodeAt(0)+1);
 	}
 
 	refresh(): void {
