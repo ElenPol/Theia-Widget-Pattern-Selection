@@ -176,23 +176,132 @@ export class extensionWidget extends ReactWidget {
 		return row;
 	}
 	//when button is clicked adds one label and one input of the specific class that the user wants to insert one more 
-	buttonClick (table: HTMLTableElement, value: string, values: string): void {
-		var row = table.insertRow(table.rows.length);
-		var cell1 = row.insertCell(0);
-		var cell2 = row.insertCell(1); 
-		var t1 = document.createElement("label");
+	buttonClick (table: HTMLTableElement, key: string, values: string): void {
 		if(extensionWidget.state.statePatternSelection=="Abstract Factory"){
+			if(key.includes("AbstractProduct")){
+				var count = this.countKeys(values, key.substr(3,));
+				var label = this.updateLabel(key.substr(3,), count);
+				var row = this.insertCells(table, label);
+				var cell3 = row.insertCell(2);
+				var t3 = document.createElement("button");
+				t3.innerHTML = "+";
+				t3.id = "btn"+ label;
+				cell3.appendChild(t3);
+				JSON.parse(values)[label]={
+					"name":"",
+					"extension":1,
+					"classes":{
 
-		}else if(extensionWidget.state.statePatternSelection=="Abstract Factory"){
+					}
+				}
+				t3.addEventListener('click', (event) => {
+						this.buttonClick(table, ( event.target as Element).id, values);
+					});	
+			}else{
 
+			}
+		}else if(extensionWidget.state.statePatternSelection=="Builder"){
+			var count = this.countKeys(values, key.substr(3, ));
+			var label = this.updateLabel("Product ", count);
+			var row = this.insertCells(table, label); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ label;
+			cell3.appendChild(t3);
+			t3.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values);
+			});	
+			var label = this.updateLabel("ConcreteBuilder ", count);
+			var row = this.insertCells(table, label); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ label;
+			cell3.appendChild(t3);
+			t3.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values);
+			});	
 		}
-		t1.innerHTML = this.updateLabel(value.substr(3,));
-		t1.id = "label"+table.rows.length;
-		var t2 = document.createElement("input");
-		t2.id = "txtbox"+table.rows.length;
-		t2.placeholder = this.updateLabel(value.substr(3,));;
-		cell1.appendChild(t1);
-		cell2.appendChild(t2);
+		else if(extensionWidget.state.statePatternSelection=="Flyweight"){
+			var count = this.countKeys(values, key.substr(3, ));
+			var label = this.updateLabel("ConcreteFlyweight ", count);
+			var row = this.insertCells(table, label); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ label;
+			cell3.appendChild(t3);
+			t3.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values);
+			});	
+			var label = this.updateLabel("UnsharedConcreteFlyweight ", count);
+			var row = this.insertCells(table, label); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ label;
+			cell3.appendChild(t3);
+			t3.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values);
+			});	
+		}else if(extensionWidget.state.statePatternSelection=="Command"){
+			var count = this.countKeys(values, key.substr(3, ));
+			var label = this.updateLabel("Receiver ", count);
+			var row = this.insertCells(table, label); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ label;
+			cell3.appendChild(t3);
+			t3.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values);
+			});	
+			var label = this.updateLabel("ConcreteCommand ", count);
+			var row = this.insertCells(table, label); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ label;
+			cell3.appendChild(t3);
+			t3.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values);
+			});	
+		}else if(extensionWidget.state.statePatternSelection=="Iterator"){
+			var count = this.countKeys(values, key.substr(3, ));
+			var label = this.updateLabel("ConcreteAggregate ", count);
+			var row = this.insertCells(table, label); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ label;
+			cell3.appendChild(t3);
+			t3.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values);
+			});	
+			var label = this.updateLabel("ConcreteIterator ", count);
+			var row = this.insertCells(table, label); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ label;
+			cell3.appendChild(t3);
+			t3.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values);
+			});	
+		}else{
+			var count = this.countKeys(values, key.substr(3, ));
+			var label = this.updateLabel("ConcreteIterator ", count);
+			var row = this.insertCells(table, label); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ label;
+			cell3.appendChild(t3);
+			t3.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values);
+			});	
+		}
 	}
 
 	buttonClick2 (table: HTMLTableElement):void{
@@ -222,16 +331,20 @@ export class extensionWidget extends ReactWidget {
 
 	updateLabel(value: string){
 		if (value.includes('.')){
-			return value.substring(0,value.length-2) + '.' + String.fromCharCode(value.slice(-1).charCodeAt(0)+1);
+			return value.substring(0,value.length-2) + '.' + count;
 		}
-		return value.substring(0,value.length-2) + String.fromCharCode(value.slice(-1).charCodeAt(0)+1);
+		return value.slice(0,-1) + count;
 	}
 
-	refresh(): void {
-		window. location. reload();
+	countKeys(values: string, keyString: string){
+		let count = 0;
+		keyString = keyString.slice(0, -1)
+		Object.keys(values).forEach((key) =>{
+			if(key.includes(keyString)){
+				count ++;
+			}
+		});
+		return count+1;
 	}
-
-}	
-
-
+}
 
