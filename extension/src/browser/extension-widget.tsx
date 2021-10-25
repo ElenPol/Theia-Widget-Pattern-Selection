@@ -132,18 +132,16 @@ export class extensionWidget extends ReactWidget {
 					});
 				}
 			});
-			var rowN = table.insertRow(table.rows.length);
-			var cell = rowN.insertCell(0);
+				
+			var d = document.getElementById("result") as HTMLElement;
 			var b = document.createElement("button");
 			b.id = "btnFinalize";
 			b.innerHTML = "Finally Get Code";
 			b.addEventListener('click', (_event) => {
+				this.buttonClick2(table);				
 								
-				var getUrl = window.location.href;
-            	this.helloBackendService.sayHelloTo(getUrl);
-				
 			});
-			cell.appendChild(b);  
+			d.appendChild(b);  
 		
 		}else{
 			this.messageService.info('You need to choose a software pattern!');
@@ -195,6 +193,31 @@ export class extensionWidget extends ReactWidget {
 		t2.placeholder = this.updateLabel(value.substr(3,));;
 		cell1.appendChild(t1);
 		cell2.appendChild(t2);
+	}
+
+	buttonClick2 (table: HTMLTableElement):void{
+		/*var result = [];
+		var rows = table.rows;
+		var cells, t;
+		// Iterate over rows
+		for (var i=0, iLen=rows.length; i<iLen; i++) {
+			cells = rows[i].cells;
+			t = [];
+			// Iterate over cells
+			for (var j=0, jLen=cells.length; j<jLen; j++) {
+			t.push(cells[j].textContent);
+			}
+			result.push(t);
+		}
+		console.log(result);*/
+
+		for (var i=1; i<=table.rows.length; i++){
+			var v = (document.getElementById("txtbox"+i)as HTMLElement).innerHTML;
+			console.log("txtbox: "+v);
+		}
+			
+		var getUrl = window.location.href;
+        this.helloBackendService.sayHelloTo(getUrl);
 	}
 
 	updateLabel(value: string){
