@@ -195,9 +195,9 @@ export class extensionWidget extends ReactWidget {
 			var row = this.insertCells(table, labelProduct); 
 			var cell3 = row.insertCell(2);
 			var t3 = document.createElement("button");
-			var k  = JSON.parse(JSON.stringify(values));
-			k[labelProduct] =  { "name":"", "extension":1};
-			values = JSON.stringify(k);
+			var newAttribute1  = JSON.parse(JSON.stringify(values));
+			newAttribute1[labelProduct] =  { "name":"", "extension":1};
+			values = JSON.stringify(newAttribute1);
 			console.log(JSON.stringify(values));
 
 			t3.innerHTML = "+";
@@ -210,12 +210,9 @@ export class extensionWidget extends ReactWidget {
 			var row = this.insertCells(table, labelConBuilder); 
 			var cell3 = row.insertCell(2);
 			var t3 = document.createElement("button");
-			var k  = JSON.parse(JSON.stringify(classes));
-			k[labelConBuilder] = {
-				"name":"",
-				"extension":1
-			}
-			console.log(JSON.stringify(k));
+			var newAttribute2 = JSON.parse(JSON.stringify(classes));
+			newAttribute2[labelConBuilder] = {"name":"","extension":1}
+			console.log(JSON.stringify(newAttribute2));
 			
 			t3.innerHTML = "+";
 			t3.id = "btn"+ labelConBuilder;
@@ -224,28 +221,6 @@ export class extensionWidget extends ReactWidget {
 				this.buttonClick(table, ( event.target as Element).id, values, classes);
 			});	
 			
-		}else if(extensionWidget.state.statePatternSelection=="Flyweight"){
-			var count = this.countKeys(values, key.substr(3, ));
-			var label = this.updateLabel("ConcreteFlyweight ", count);
-			var row = this.insertCells(table, label); 
-			var cell3 = row.insertCell(2);
-			var t3 = document.createElement("button");
-			t3.innerHTML = "+";
-			t3.id = "btn"+ label;
-			cell3.appendChild(t3);
-			t3.addEventListener('click', (event) => {
-				this.buttonClick(table, ( event.target as Element).id, values, classes);
-			});	
-			var label = this.updateLabel("UnsharedConcreteFlyweight ", count);
-			var row = this.insertCells(table, label); 
-			var cell3 = row.insertCell(2);
-			var t3 = document.createElement("button");
-			t3.innerHTML = "+";
-			t3.id = "btn"+ label;
-			cell3.appendChild(t3);
-			t3.addEventListener('click', (event) => {
-				this.buttonClick(table, ( event.target as Element).id, values, classes);
-			});	
 		}else if(extensionWidget.state.statePatternSelection=="Command"){
 			var count = this.countKeys(values, key.substr(3, ));
 			var label = this.updateLabel("Receiver ", count);
@@ -269,25 +244,38 @@ export class extensionWidget extends ReactWidget {
 				this.buttonClick(table, ( event.target as Element).id, values, classes);
 			});	
 		}else if(extensionWidget.state.statePatternSelection=="Iterator"){
-			var count = this.countKeys(values, key.substr(3, ));
-			var label = this.updateLabel("ConcreteAggregate ", count);
-			var row = this.insertCells(table, label); 
+			var count = this.countKeys(classes, key.substr(3, ));
+			var labelConAggregate = this.updateLabel("ConcreteAggregate ", count);
+			var row = this.insertCells(table, labelConAggregate); 
 			var cell3 = row.insertCell(2);
 			var t3 = document.createElement("button");
 			t3.innerHTML = "+";
-			t3.id = "btn"+ label;
+			t3.id = "btn"+ labelConAggregate;
 			cell3.appendChild(t3);
+			var labelConIterator = this.updateLabel("ConcreteIterator ", count);
+			var row = this.insertCells(table, labelConIterator); 
+			var cell3 = row.insertCell(2);
+			var t4 = document.createElement("button");
+			t4.innerHTML = "+";
+			t4.id = "btn"+ labelConIterator;
+			cell3.appendChild(t3);
+			if(key.includes("ConcreteAggregate")){
+				var newAttribute1  = JSON.parse(JSON.stringify(classes));
+				newAttribute1[labelConAggregate] =  { "name":"", "extension":1};
+				values = JSON.stringify(newAttribute1);
+
+				var newAttribute2 = JSON.parse(JSON.stringify(values))["ConcreteIterator"]["classes"];
+				console.log(JSON.stringify(newAttribute2));
+				newAttribute2[labelConIterator] =  { "name":"", "extension":1};
+				values = JSON.stringify(newAttribute2);
+				console.log(JSON.stringify(values));
+			}
+			
 			t3.addEventListener('click', (event) => {
 				this.buttonClick(table, ( event.target as Element).id, values, classes);
 			});	
-			var label = this.updateLabel("ConcreteIterator ", count);
-			var row = this.insertCells(table, label); 
-			var cell3 = row.insertCell(2);
-			var t3 = document.createElement("button");
-			t3.innerHTML = "+";
-			t3.id = "btn"+ label;
-			cell3.appendChild(t3);
-			t3.addEventListener('click', (event) => {
+			
+			t4.addEventListener('click', (event) => {
 				this.buttonClick(table, ( event.target as Element).id, values, classes);
 			});	
 		}else{
