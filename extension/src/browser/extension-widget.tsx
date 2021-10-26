@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { injectable, postConstruct, inject } from 'inversify';
 import { AlertMessage } from '@theia/core/lib/browser/widgets/alert-message';
 import { ReactWidget } from '@theia/core/lib/browser/widgets/react-widget';
@@ -18,7 +19,7 @@ export class extensionWidget extends ReactWidget {
 	
     static state = {
 		statePatternSelection: '',
-		stateURLproject: ''
+		
 	}
 	
     @inject(MessageService)
@@ -29,16 +30,17 @@ export class extensionWidget extends ReactWidget {
 
 	@postConstruct()
 	protected async init(): Promise < void> {
-    this.id = extensionWidget.ID;
-    this.title.label = extensionWidget.LABEL;
-    this.title.caption = extensionWidget.LABEL;
-    this.title.closable = true;
-    this.title.iconClass = 'fa fa-info-circle';
-    this.update();
+		this.id = extensionWidget.ID;
+		this.title.label = extensionWidget.LABEL;
+		this.title.caption = extensionWidget.LABEL;
+		this.title.closable = true;
+		this.title.iconClass = 'fa fa-info-circle';
+		
+		this.update();
 	}
 	
 	static setState: any;
-
+	static textBoxValues : Array<string> = [];
 	static data = JSON.parse(JSON.stringify(data));
 
 	protected render(): React.ReactNode {
@@ -138,7 +140,7 @@ export class extensionWidget extends ReactWidget {
 			b.id = "btnFinalize";
 			b.innerHTML = "Finally Get Code";
 			b.addEventListener('click', (_event) => {
-				this.buttonClick2(table);				
+				this.buttonClick2();				
 								
 			});
 			d.appendChild(b);  
@@ -161,6 +163,7 @@ export class extensionWidget extends ReactWidget {
 		extensionWidget.state[key]  = e.currentTarget.value;
 		
 	}
+	
 	insertCells(table: HTMLTableElement, key: string){
 		var row = table.insertRow(table.rows.length);
 		var cell1 = row.insertCell(0);
@@ -170,6 +173,10 @@ export class extensionWidget extends ReactWidget {
 		t1.innerHTML = key;
 		var t2 = document.createElement("input");
 		t2.id = "txtbox"+ table.rows.length;
+		var num = table.rows.length;
+		t2.onchange = function () {  
+			extensionWidget.textBoxValues[num-1] = t2.value;
+		};
 		t2.placeholder = key;
 		cell1.appendChild(t1);
 		cell2.appendChild(t2);
@@ -304,32 +311,19 @@ export class extensionWidget extends ReactWidget {
 		}
 	}
 
-	buttonClick2 (table: HTMLTableElement):void{
-		/*var result = [];
-		var rows = table.rows;
-		var cells, t;
-		// Iterate over rows
-		for (var i=0, iLen=rows.length; i<iLen; i++) {
-			cells = rows[i].cells;
-			t = [];
-			// Iterate over cells
-			for (var j=0, jLen=cells.length; j<jLen; j++) {
-			t.push(cells[j].textContent);
-			}
-			result.push(t);
-		}
-		console.log(result);*/
-
-		for (var i=1; i<=table.rows.length; i++){
-			var v = (document.getElementById("txtbox"+i)as HTMLElement).innerHTML;
-			console.log("txtbox: "+v);
-		}
-			
+	buttonClick2 ():void{
 		var getUrl = window.location.href;
-        this.helloBackendService.sayHelloTo(getUrl);
+        this.helloBackendService.sayHelloTo(getUrl, extensionWidget.textBoxValues).then((index) => {
+			if (index!=-1){
+				this.messageService.info("The name of the " + (index+1) + " class already exists in the project! ");
+			}else{
+				//call function for code generate
+				this.messageService.info("Well done! Code is coming...");
+			}
+		});
 	}
 
-	updateLabel(value: string){
+	updateLabel(value: string, count: number){
 		if (value.includes('.')){
 			return value.substring(0,value.length-2) + '.' + count;
 		}
@@ -347,4 +341,5 @@ export class extensionWidget extends ReactWidget {
 		return count+1;
 	}
 }
+
 
