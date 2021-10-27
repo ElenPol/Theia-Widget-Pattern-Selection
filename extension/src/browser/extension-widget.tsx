@@ -179,27 +179,47 @@ export class extensionWidget extends ReactWidget {
 
 				var newValues = JSON.parse(JSON.stringify(values));
 				newValues[labelAbstrProd] =  JSON.stringify({ "name":"", "extension":1, "classes":{}});
-				
-				Object.keys(newValues[key.substr(3,)]["classes"]).forEach((key,i)=>{
-					var labelProduct = "Product"+count+"."+i+1;
-					console.log(labelProduct);
+				var i = 1;
+				var count2 = this.countKeys(JSON.parse(values)[key.substr(3,)]["classes"], "Product");
+				for(var j=0;j<count2;j++){
+					var labelProduct = "Product"+count+"."+i;
+					this.insertCells(table, "Product"+count+"."+i );
 					var row = this.insertCells(table, labelProduct);
 					var cell3 = row.insertCell(2);
 					var t3 = document.createElement("button");
 					t3.innerHTML = "+";
 					t3.id = "btn"+ labelAbstrProd;
 					cell3.appendChild(t3);
-
-					newValues[labelAbstrProd]["classes"]=  { "name":"", "extension":1};
-					
-				});
-				var count2 = this.countKeys(JSON.parse(values)[key.substr(3,)]["classes"], "Product");
+					i++;
+					newValues[labelAbstrProd]["classes"][labelProduct]= JSON.stringify({ "name":"", "extension":1});
+				}
+				
 				console.log(count2);
 				t3.addEventListener('click', (event) => {
 						this.buttonClick(table, ( event.target as Element).id, values, "");
 					});	
 			}else{
+				var count = this.countKeys(classes, key.substr(3,));
+				var labelConFactory = this.updateLabel("ConcreteFactory ", count);
+				var row = this.insertCells(table, labelConFactory);
+				var cell3 = row.insertCell(2);
+				var t3 = document.createElement("button");
+				t3.innerHTML = "+";
+				t3.id = "btn"+ labelConFactory;
+				cell3.appendChild(t3);
 
+				var newValues = JSON.parse(JSON.stringify(values));
+				var count2 = this.countKeys(JSON.parse(values)[key.substr(3,)]["classes"], "Product");
+				newValues["AbstractFactory"]["classes"][labelConFactory] =  JSON.stringify({ "name":"", "extension":1, "classes":{}});
+				var i = 1;
+				Object.keys(newValues).forEach((key,i)=>{
+					if(key.includes("AbstractProduct")){
+						newValues[key]["classes"]["Product"+count+"."+i] = JSON.stringify({ "name":"", "extension":1});
+						this.insertCells(table, "Product"+count+"."+i );
+						i++;
+					}	
+				});
+				console.log(JSON.stringify(newValues))
 			}
 		}else if(extensionWidget.state.statePatternSelection=="Builder"){
 			if(key.includes("Product")){
