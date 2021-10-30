@@ -140,7 +140,7 @@ export class extensionWidget extends ReactWidget {
 			b.id = "btnFinalize";
 			b.innerHTML = "Finally Get Code";
 			b.addEventListener('click', (_event) => {
-				this.buttonClick2();				
+				this.buttonClick2(table.rows.length);				
 								
 			});
 			d.appendChild(b);  
@@ -187,6 +187,7 @@ export class extensionWidget extends ReactWidget {
 		if(extensionWidget.state.statePatternSelection=="Abstract Factory"){
 			if(key.includes("AbstractProduct")){
 				var count = this.countKeys(values, key.substr(3,));
+				console.log(key.substr(3,), count);
 				var labelAbstrProd = this.updateLabel(key.substr(3,), count);
 				var row = this.insertCells(table, labelAbstrProd);
 				var cell3 = row.insertCell(2);
@@ -196,23 +197,12 @@ export class extensionWidget extends ReactWidget {
 				cell3.appendChild(t3);
 
 				var newValues = JSON.parse(JSON.stringify(values));
-				newValues[labelAbstrProd] =  JSON.stringify({ "name":"", "extension":1, "classes":{}});
-				var i = 1;
-				var count2 = this.countKeys(JSON.parse(values)[key.substr(3,)]["classes"], "Product");
+				var count2 = this.countKeys(newValues[key.substr(3,)]["classes"], "Product")-1;
 				for(var j=0;j<count2;j++){
-					var labelProduct = "Product"+count+"."+i;
-					this.insertCells(table, "Product"+count+"."+i );
+					var labelProduct = "Product"+count+"."+(j+1);
 					var row = this.insertCells(table, labelProduct);
-					var cell3 = row.insertCell(2);
-					var t3 = document.createElement("button");
-					t3.innerHTML = "+";
-					t3.id = "btn"+ labelAbstrProd;
-					cell3.appendChild(t3);
-					i++;
-					newValues[labelAbstrProd]["classes"][labelProduct]= JSON.stringify({ "name":"", "extension":1});
+					newValues[labelProduct]= JSON.stringify({ "name":"", "extension":1});
 				}
-				
-				console.log(count2);
 				t3.addEventListener('click', (event) => {
 						this.buttonClick(table, ( event.target as Element).id, values, "");
 					});	
@@ -227,17 +217,15 @@ export class extensionWidget extends ReactWidget {
 				cell3.appendChild(t3);
 
 				var newValues = JSON.parse(JSON.stringify(values));
-				var count2 = this.countKeys(JSON.parse(values)[key.substr(3,)]["classes"], "Product");
-				newValues["AbstractFactory"]["classes"][labelConFactory] =  JSON.stringify({ "name":"", "extension":1, "classes":{}});
-				var i = 1;
-				Object.keys(newValues).forEach((key,i)=>{
-					if(key.includes("AbstractProduct")){
-						newValues[key]["classes"]["Product"+count+"."+i] = JSON.stringify({ "name":"", "extension":1});
-						this.insertCells(table, "Product"+count+"."+i );
-						i++;
-					}	
-				});
-				console.log(JSON.stringify(newValues))
+				var numAbstrProd = this.countKeys(newValues, "AbstractProduct")-1;
+				console.log("AbstrProd " + numAbstrProd);
+				newValues["AbstractFactory"]["classes"][labelConFactory] =  JSON.stringify({ "name":"", "extension":1});
+				for(var j=0;j<numAbstrProd;j++){
+					var labelProduct = "Product"+(j+1)+"."+count;
+					var row = this.insertCells(table, labelProduct);
+					newValues["AbstractProduct"+(j+1)][labelProduct]= JSON.stringify({ "name":"", "extension":1});
+				}
+				
 			}
 		}else if(extensionWidget.state.statePatternSelection=="Builder"){
 			if(key.includes("Product")){
@@ -252,7 +240,7 @@ export class extensionWidget extends ReactWidget {
 			var newValues = JSON.parse(JSON.stringify(values));
 			newValues[labelProduct] =  JSON.stringify({ "name":"", "extension":1});
 			newValues["Builder"]["classes"][labelConBuilder] = JSON.stringify({ "name":"", "extension":1});
-			console.log(JSON.stringify(newValues))
+			console.log(JSON.stringify(newValues));
 
 			var row = this.insertCells(table, labelProduct); 
 			var cell3 = row.insertCell(2);
@@ -342,19 +330,17 @@ export class extensionWidget extends ReactWidget {
 				this.buttonClick(table, ( event.target as Element).id, values, classes);
 			});	
 		}else{
-			var count = this.countKeys(values, key.substr(3, ));
-			var label = this.updateLabel(key.substr(3, ), count);
-			var newValues = JSON.parse(JSON.stringify(values));
+			
 			if(classes==""){
+				var count = this.countKeys(values, key.substr(3, ));
+				var label = this.updateLabel(key.substr(3, ), count);
+				var newValues = JSON.parse(JSON.stringify(values));
 				newValues[label] = JSON.stringify( { "name":"", "extension":1});//attribute "classes" in Aggreagate attribute gets new json value
 			}else{
+				var count = this.countKeys(classes, key.substr(3, ));
+				var label = this.updateLabel(key.substr(3, ), count);
 				var newClasses = JSON.parse(JSON.stringify(classes));
-				Object.keys(newClasses).forEach((key) =>{
-					if("classes" in newClasses[key]){
-						newClasses[key]["classes"][label] = JSON.stringify({"name":"", "extension":1})
-					}
-
-				});
+				newClasses[label] = JSON.stringify({"name":"", "extension":1});
 			}
 			var row = this.insertCells(table, label); 
 			var cell3 = row.insertCell(2);
@@ -366,18 +352,23 @@ export class extensionWidget extends ReactWidget {
 				this.buttonClick(table, ( event.target as Element).id, values, classes);
 			});	
 		}
+		console.log(JSON.stringify(newValues));
 	}
 
-	buttonClick2 ():void{
-		var getUrl = window.location.href;
-        this.helloBackendService.sayHelloTo(getUrl, extensionWidget.textBoxValues).then((index) => {
-			if (index!=-1){
-				this.messageService.info("The name of the " + (index+1) + " class already exists in the project! ");
-			}else{
-				//call function for code generate
-				this.messageService.info("Well done! Code is coming...");
-			}
-		});
+	buttonClick2 (rows : number):void{
+		if (rows!=extensionWidget.textBoxValues.length){
+			this.messageService.info("You need to give name for ALL the classes!");
+		}else{
+			var getUrl = window.location.href;
+			this.helloBackendService.sayHelloTo(getUrl, extensionWidget.textBoxValues).then((index) => {
+				if (index!=-1){
+					this.messageService.info("The name of the " + (index+1) + " class already exists in the project! ");
+				}else{
+					//call function for code generate
+					this.messageService.info("Well done! Code is coming...");
+				}
+			});
+		}
 	}
 
 	updateLabel(value: string, count: number){
