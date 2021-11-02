@@ -1,10 +1,13 @@
 import * as React from 'react';
+
 import { injectable, postConstruct, inject } from 'inversify';
 import { AlertMessage } from '@theia/core/lib/browser/widgets/alert-message';
 import { ReactWidget } from '@theia/core/lib/browser/widgets/react-widget';
 import { MessageService } from '@theia/core';
-import { integer } from 'vscode-languageserver-types';
-//import * as data from './data.json';
+
+import { HelloBackendService } from '../common/protocol';
+import data from './data.json';
+
 
 
 @injectable()
@@ -16,285 +19,35 @@ export class extensionWidget extends ReactWidget {
 	
     static state = {
 		statePatternSelection: '',
-		stateURLproject: ''
+		
 	}
 	
     @inject(MessageService)
     protected readonly messageService!: MessageService;
+	@inject(HelloBackendService)
+	protected readonly helloBackendService: HelloBackendService;
+    
 
 	@postConstruct()
 	protected async init(): Promise < void> {
-    this.id = extensionWidget.ID;
-    this.title.label = extensionWidget.LABEL;
-    this.title.caption = extensionWidget.LABEL;
-    this.title.closable = true;
-    this.title.iconClass = 'fa fa-info-circle';
-    this.update();
+		this.id = extensionWidget.ID;
+		this.title.label = extensionWidget.LABEL;
+		this.title.caption = extensionWidget.LABEL;
+		this.title.closable = true;
+		this.title.iconClass = 'fa fa-info-circle';
+		
+		this.update();
 	}
 	
 	static setState: any;
-	
-	static a = [
-		{//???
-		   "name":"Abstract Factory",
-		   "values":[
-			  "AbstractFactory",
-			  "ConcreteFactory",
-			  "AbstractProduct1",
-			  "Product1",
-			  "Client"
-		   ],
-		   "btnExtension":[0,0,1,1,0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Builder",
-		   "values":[
-			  "Director",
-			  "Builder",
-			  "ConcreteBuilder1",
-			  "Product1"
-		   ],
-		   "btnExtension":[0,0,1,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Factroy Method",
-		   "values":[
-			  "Product",
-			  "ConcreteProduct",
-			  "Creator",
-			  "ConcreteCreator"
-		   ],
-		   "btnExtension":[0,0,0,0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Prototype",
-		   "values":[
-			  "Client",
-			  "Prototype",
-			  "ConcretePrototype1"
-		   ],
-		   "btnExtension":[0,0,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Singleton",
-		   "values":[
-			  "Singleton"
-		   ],
-		   "btnExtension":[0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Adapter",
-		   "values":[
-			  "Client",
-			  "Target",
-			  "Adapter1",
-			  "Adaptee1"
-		   ],
-		   "btnExtension":[0,0,1,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Bridge",
-		   "values":[
-			  "Client",
-			  "Abstraction",
-			  "RefinedAbstraction1",
-			  "Implementor",
-			  "ConcreteImplementor1"
-		   ],
-		   "btnExtension":[0,0,1,0,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Composite",
-		   "values":[
-			  "Client",
-			  "Component",
-			  "Leaf1",
-			  "Composite1"
-		   ],
-		   "btnExtension":[0,0,1,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Decorator",
-		   "values":[
-			  "Component",
-			  "ConcreteComponent1",
-			  "Decorator",
-			  "ConcreteDecorator1"
-		   ],
-		   "btnExtension":[0,1,0,1],
-		   "counter": 1,
-		},
-		{//??
-		   "name":"Facade",
-		   "values":[
-			  ""
-		   ],
-		   "btnExtension":[0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Flyweight",
-		   "values":[
-			  "Client",
-			  "FlyweightFactory",
-			  "Flyweight",
-			  "ConcreteFlyweight",
-			  "UnsharedConcreteFlyweight",
-			  "Client"
-		   ],
-		   "btnExtension":[0,0,0,0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Proxy",
-		   "values":[
-			  "Client",
-			  "Subject",
-			  "Proxy",
-			  "RealSubject"
-		   ],
-		   "btnExtension":[0,0,0,0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Chain of Responsibility",
-		   "values":[
-			  "Client",
-			  "Handler",
-			  "ConcreteHandler1"
-		   ],
-		   "btnExtension":[0,0,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Command",
-		   "values":[
-			  "Command",
-			  "ConcreteCommand1",
-			  "Client",
-			  "Invoker",
-			  "Receiver"
-		   ],
-		   "btnExtension":[0,1,0,0,0],
-		   "counter": 1,
-		},
-		{//???/
-		   "name":"Interpreter",
-		   "values":[
-			  "Client",
-			  "Context",
-			  "AbstractExpression",
-			  "TerminalExpression",
-			  "NonterminalExpression"
-		   ],
-		   "btnExtension":[0,0,0,0,0],
-		   "counter": 1,
-		},
-		{///???
-		   "name":"Iterator",
-		   "values":[
-			  "Aggregate",
-			  "Client",
-			  "Iterator",
-			  "ConcreteAggregate1",
-			  "ConcreteIterator1"
-		   ],
-		   "btnExtension":[0,0,0,1,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Mediator",
-		   "values":[
-			  "Mediator",
-			  "Colleague",
-			  "ConcreteMediator",
-			  "ConcreteColleague1"
-		   ],
-		   "btnExtension":[0,0,0,1],
-		   "counter": 1,
-		},
-		{///???
-		   "name":"Memento",
-		   "values":[
-			  "Originator",
-			  "Memento",
-			  "Caretaker"
-		   ],
-		   "btnExtension":[0,0,0],
-		   "counter": 1,
-		},
-		{//???/
-		   "name":"Observer",
-		   "values":[
-			  "Subject",
-			  "Observer",
-			  "ConcreteSubject",
-			  "ConcreteObserver"
-		   ],
-		   "btnExtension":[0,0,0,0],
-		   "counter": 1,
-		},
-		{
-		   "name":"State",
-		   "values":[
-			  "Context",
-			  "State",
-			  "ConcreteState1"
-		   ],
-		   "btnExtension":[0,0,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Strategy",
-		   "values":[
-			  "Context",
-			  "Strategy",
-			  "ConcreteStrategy1"
-		   ],
-		   "btnExtension":[0,0,1],
-		   "counter": 1,
-		},
-		{
-		   "name":"Template Method",
-		   "values":[
-			  "AbstractClass",
-			  "ConcreteClass"
-		   ],
-		   "btnExtension":[0,0],
-		   "counter": 1,
-		},
-		{
-		   "name":"Visitor",
-		   "values":[
-			  "Client",
-			  "Visitor",
-			  "ConcreteVisitor1",
-			  "ObjectStructure",
-			  "Element",
-			  "ConcreteElement1"
-		   ],
-		   "btnExtension":[0,0,1,0,0,1],
-		   "counter": 1,
-		}
-	 ];
-	
+	static textBoxValues : Array<string> = [];
+	static data = JSON.parse(JSON.stringify(data));
+
 	protected render(): React.ReactNode {
 		const header = `Choose a Design Pattern and get the code. `;
 		
 		return <div id='widget-container'>
 		<AlertMessage type='INFO' header={header} />
-		<br /> 
-		<label id="label-URL-project">Provide the Projects's URL</label>
-		<input id="URL-project" onChange={this.updateInput} placeholder='Project URL' name="stateURLproject"></input>
-		<br />
 		<div id='issues'>
 				<br />
 				<select id="drop-down-patterns" onChange={this.updateSelection} name="statePatternSelection">
@@ -338,58 +91,66 @@ export class extensionWidget extends ReactWidget {
 				<br /> 
 				<div id="result">
 					<table id="show_pattern_table">
-
 					</table>
-					
 				</div>
-				
 			</div>
 			</div>
 	}
 	
     protected runprocess(): void {
-		if (extensionWidget.state.statePatternSelection!="Choose_pattern" && extensionWidget.state.statePatternSelection!="" && extensionWidget.state.stateURLproject!="" && extensionWidget.state.stateURLproject!='Project URL'){
+		if (extensionWidget.state.statePatternSelection!="Choose_pattern" && extensionWidget.state.statePatternSelection!=""){
 			(document.getElementById("btn-get-code") as HTMLButtonElement).style.visibility = 'hidden';
-			 
+			
 			//show the JSON values for the chosen key-pattern
-			var  index = extensionWidget.a.findIndex(x => x.name === extensionWidget.state.statePatternSelection);
-			console.log(index);
-			var values = extensionWidget.a[index]["values"];
-			var btnExtension = extensionWidget.a[index]["btnExtension"] ;
-			var counter = extensionWidget.a[index]["counter"] ;
+			var values = extensionWidget.data[extensionWidget.state.statePatternSelection].values; //data[extensionWidget.state.statePatternSelection];
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
-			for (var i=0;i< values.length;i++){
-				var row = table.insertRow(i);
-				var cell1 = row.insertCell(0);
-				var cell2 = row.insertCell(1);
-				var t1 = document.createElement("label");
-				t1.innerHTML = values[i];
-				t1.id = "label"+i;
-				var t2 = document.createElement("input");
-				t2.id = "txtbox"+i;
-				t2.placeholder = values[i];
-				cell1.appendChild(t1);
-				//cell1.style.width = "200px";
-				cell2.appendChild(t2);
-				//cell2.style.width = "200px";
-				if(btnExtension[i]==1){
+			Object.keys(values).forEach((key) =>{
+				var row = this.insertCells(table, key);
+				if(values[key].extension==1){
 					var cell3 = row.insertCell(2);
 					var t3 = document.createElement("button");
 					t3.innerHTML = "+";
-					t3.id = "btn"+ values[i];
+					t3.id = "btn"+ key;
 					cell3.appendChild(t3);
 					t3.addEventListener('click', (event) => {
-						this.buttonClick(table, ( event.target as Element).id, counter +1);
-						counter = counter + 1;
+						this.buttonClick(table, ( event.target as Element).id, extensionWidget.data[extensionWidget.state.statePatternSelection].values, "");
 					});	
-
 				}
-			}
-			
-			   
+				if (("classes" in values[key]) == true){
+					var classes = values[key]["classes"];
+					Object.keys(classes).forEach((key1) =>{
+						var row = this.insertCells(table, key1);
+						if(classes[key1].extension==1){
+							var cell3 = row.insertCell(2);
+							var t3 = document.createElement("button");
+							t3.innerHTML = "+";
+							t3.id = "btn"+ key1;
+							cell3.appendChild(t3);
+							t3.addEventListener('click', (event) => {
+								console.log("key " + key);
+								console.log(JSON.stringify(extensionWidget.data[extensionWidget.state.statePatternSelection]));
+								this.buttonClick(table, ( event.target as Element).id, extensionWidget.data[extensionWidget.state.statePatternSelection].values,
+												extensionWidget.data[extensionWidget.state.statePatternSelection].values[key].classes);
+								
+								console.log("RUNPROCESS " + JSON.stringify(extensionWidget.data[extensionWidget.state.statePatternSelection].values));
+								
+								 								
+							});	
+						}
 
-		}else if (extensionWidget.state.stateURLproject=='Project URL' || extensionWidget.state.stateURLproject==""){
-			this.messageService.info('You need to enter the Theia URL of the project!');
+					});
+				}
+			});
+				
+			var d = document.getElementById("result") as HTMLElement;
+			var b = document.createElement("button");
+			b.id = "btnFinalize";
+			b.innerHTML = "Finally Get Code";
+			b.addEventListener('click', (_event) => {
+				this.buttonClick2(table.rows.length);				
+								
+			});
+			d.appendChild(b);  
 		
 		}else{
 			this.messageService.info('You need to choose a software pattern!');
@@ -401,6 +162,7 @@ export class extensionWidget extends ReactWidget {
 		const key =e.currentTarget.name as keyof typeof extensionWidget.state;
 		extensionWidget.state[key]  = e.currentTarget.value;
 		
+		
 	}
 	 //update the state
 	 updateInput(e:React.ChangeEvent<HTMLInputElement>){
@@ -408,27 +170,236 @@ export class extensionWidget extends ReactWidget {
 		extensionWidget.state[key]  = e.currentTarget.value;
 		
 	}
-	//when button is clicked adds one label and one input of the specific class that the user wants to insert one more 
-	buttonClick (table: HTMLTableElement, value: string, counter: integer): void {
-		table = document.getElementById('show_pattern_table') as HTMLTableElement;
-		var size = table.rows.length;	
-		var row = table.insertRow(size);
+	
+	insertCells(table: HTMLTableElement, key: string){
+		var row = table.insertRow(table.rows.length);
 		var cell1 = row.insertCell(0);
 		var cell2 = row.insertCell(1);
 		var t1 = document.createElement("label");
-		t1.id = "label"+(size);
-		value = this.updateLabelValue(value.substr(3,), counter);
-		t1.innerHTML = value;
+		t1.id = "label"+ table.rows.length;
+		t1.innerHTML = key;
 		var t2 = document.createElement("input");
-		t2.id = "txtbox"+(size);
-		t2.placeholder = value;
+		t2.id = "txtbox"+ table.rows.length;
+		var num = table.rows.length;
+		t2.onchange = function () {  
+			extensionWidget.textBoxValues[num-1] = t2.value;
+		};
+		t2.placeholder = key;
 		cell1.appendChild(t1);
 		cell2.appendChild(t2);
+		return row;
+	}
+	//when button is clicked adds one label and one input of the specific class that the user wants to insert one more 
+	buttonClick (table: HTMLTableElement, key: string, values: string, classes: string) {
+		console.log(JSON.stringify(values));
+		if(extensionWidget.state.statePatternSelection=="Abstract Factory"){
+			if(key.includes("AbstractProduct")){
+				var newValues = JSON.parse(JSON.stringify(values));
+				var count = this.countKeys(values, key.substr(3,));
+				console.log(key.substr(3,), count);
+				var labelAbstrProd = this.updateLabel(key.substr(3,), count);
+				newValues[labelAbstrProd] ={name:"",extension:1,classes:{}};
+				//JSON.stringify({ "name":"", "extension":1 });
+				//newValues[labelAbstrProd]["classes"] = JSON.stringify({"dff":""});
+				var row = this.insertCells(table, labelAbstrProd);
+				var cell3 = row.insertCell(2);
+				var t3 = document.createElement("button");
+				t3.innerHTML = "+";
+				t3.id = "btn"+ labelAbstrProd;
+				cell3.appendChild(t3);
+
+				console.log("classes " + JSON.stringify(newValues[labelAbstrProd]["classes"]));
+				var count2 = this.countKeys(newValues[key.substr(3,)]["classes"], "Product")-1;
+				console.log("count "+count2);
+				for(var j=0;j<count2;j++){
+					var labelProduct = "Product"+count+"."+(j+1);
+					var row = this.insertCells(table, labelProduct);
+					newValues[labelAbstrProd]["classes"][labelProduct]= JSON.stringify({ "name":"", "extension":1});
+				}
+				
+				t3.addEventListener('click', (event) => {
+						this.buttonClick(table, ( event.target as Element).id, values, "");
+					});	
+			}else{
+				var count = this.countKeys(classes, key.substr(3,));
+				var labelConFactory = this.updateLabel("ConcreteFactory ", count);
+				var row = this.insertCells(table, labelConFactory);
+				var cell3 = row.insertCell(2);
+				var t3 = document.createElement("button");
+				t3.innerHTML = "+";
+				t3.id = "btn"+ labelConFactory;
+				cell3.appendChild(t3);
+
+				var newValues = JSON.parse(JSON.stringify(values));
+				var numAbstrProd = this.countKeys(newValues, "AbstractProduct")-1;
+				console.log("AbstrProd " + numAbstrProd);
+				newValues["AbstractFactory"]["classes"][labelConFactory] =  JSON.stringify({ "name":"", "extension":1});
+				for(var j=0;j<numAbstrProd;j++){
+					var labelProduct = "Product"+(j+1)+"."+count;
+					var row = this.insertCells(table, labelProduct);
+					newValues["AbstractProduct"+(j+1)]["classes"][labelProduct]= JSON.stringify({ "name":"", "extension":1});
+				}
+				
+			}
+		}else if(extensionWidget.state.statePatternSelection=="Builder"){
+			if(key.includes("Product")){
+				var count = this.countKeys(values, key.substr(3, ));
+			}else{
+				var count = this.countKeys(classes, key.substr(3, ));
+			}
+
+			var labelProduct = this.updateLabel("Product ", count);
+			var labelConBuilder = this.updateLabel("ConcreteBuilder ", count);
+
+			var newValues = JSON.parse(JSON.stringify(values));
+			newValues[labelProduct] =  JSON.stringify({ "name":"", "extension":1});
+			newValues["Builder"]["classes"][labelConBuilder] = JSON.stringify({ "name":"", "extension":1});
+			
+			var row = this.insertCells(table, labelProduct); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ labelProduct;
+			cell3.appendChild(t3);
+			
+			var row = this.insertCells(table, labelConBuilder); 
+			var cell3 = row.insertCell(2);
+			var t4 = document.createElement("button");
+			t4.innerHTML = "+";
+			t4.id = "btn"+ labelConBuilder;
+			cell3.appendChild(t4);
+			
+		}else if(extensionWidget.state.statePatternSelection=="Command"){
+			if(key.includes("Receiver")){
+				var count = this.countKeys(values, key.substr(3, ));
+			}else{
+				var count = this.countKeys(classes, key.substr(3, ));
+			}
+			
+			var labelReceiver = this.updateLabel("Receiver ", count);
+			var labelConCommand = this.updateLabel("ConcreteCommand ", count);
+
+			var row = this.insertCells(table, labelReceiver); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ labelReceiver;
+			cell3.appendChild(t3);
+			
+			var row = this.insertCells(table, labelConCommand); 
+			var cell3 = row.insertCell(2);
+			var t4 = document.createElement("button");
+			t4.innerHTML = "+";
+			t4.id = "btn"+ labelConCommand;
+			cell3.appendChild(t4);
+
+			//inserts new attributes in json
+			var newValues = JSON.parse(JSON.stringify(values));
+			newValues[labelReceiver] =  JSON.stringify({ "name":"", "extension":1});
+			newValues["Command"]["classes"][labelConCommand] = JSON.stringify({ "name":"", "extension":1});
+			console.log(JSON.stringify(newValues))
+			
+			t3.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values, classes);
+			});	
+			
+			t4.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values, classes);
+			});	
+		}else if(extensionWidget.state.statePatternSelection=="Iterator"){
+			var count = this.countKeys(classes, key.substr(3, ));
+			var labelConAggregate = this.updateLabel("ConcreteAggregate ", count);
+			var labelConIterator = this.updateLabel("ConcreteIterator ", count);
+
+			//button insertion 
+			var row = this.insertCells(table, labelConAggregate); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ labelConAggregate;
+			cell3.appendChild(t3);
+
+			//button insertion
+			var row = this.insertCells(table, labelConIterator); 
+			var cell3 = row.insertCell(2);
+			var t4 = document.createElement("button");
+			t4.innerHTML = "+";
+			t4.id = "btn"+ labelConIterator;
+			cell3.appendChild(t4);
+			
+			var newValues = JSON.parse(JSON.stringify(values));
+			newValues["Aggregate"]["classes"][labelConAggregate] = JSON.stringify( { "name":"", "extension":1});//attribute "classes" in Aggreagate attribute gets new json value
+			newValues["Iterator"]["classes"][labelConIterator] = JSON.stringify({ "name":"", "extension":1});
+				
+			console.log(JSON.stringify(newValues));
+
+			t3.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values, classes);
+			});	
+			
+			t4.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values, classes);
+			});	
+		}else{
+			
+			if(classes==""){
+				var count = this.countKeys(values, key.substr(3, ));
+				var label = this.updateLabel(key.substr(3, ), count);
+				var newValues = JSON.parse(JSON.stringify(values));
+				newValues[label] = JSON.stringify( { "name":"", "extension":1});//attribute "classes" in Aggreagate attribute gets new json value
+			}else{
+				var count = this.countKeys(classes, key.substr(3, ));
+				var label = this.updateLabel(key.substr(3, ), count);
+				var newClasses = JSON.parse(JSON.stringify(classes));
+				newClasses[label] = JSON.stringify({"name":"", "extension":1});
+			}
+			var row = this.insertCells(table, label); 
+			var cell3 = row.insertCell(2);
+			var t3 = document.createElement("button");
+			t3.innerHTML = "+";
+			t3.id = "btn"+ label;
+			cell3.appendChild(t3);
+			t3.addEventListener('click', (event) => {
+				this.buttonClick(table, ( event.target as Element).id, values, classes);
+			});	
+		}
+		//console.log(JSON.stringify(newValues));
+		extensionWidget.data[extensionWidget.state.statePatternSelection].values = newValues;
 	}
 
-	updateLabelValue(string : string, counter: integer): string {
-		let lastChar = string.slice(-1);
-		string = string.replace(lastChar, counter.toString());
-		return string;
+	buttonClick2 (rows : number):void{
+		if (rows!=extensionWidget.textBoxValues.length){
+			this.messageService.info("You need to give name for ALL the classes!");
+		}else{
+			var getUrl = window.location.href;
+			this.helloBackendService.sayHelloTo(getUrl, extensionWidget.textBoxValues).then((index) => {
+				if (index!=-1){
+					this.messageService.info("The name of the " + (index+1) + " class already exists in the project! ");
+				}else{
+					//call function for code generate
+					this.messageService.info("Well done! Code is coming...");
+				}
+			});
+		}
 	}
-}	
+
+	updateLabel(value: string, count: number){
+		if (value.includes('.')){
+			return value.substring(0,value.length-2) + '.' + count;
+		}
+		return value.slice(0,-1) + count;
+	}
+
+	countKeys(values: string, keyString: string){
+		let count = 0;
+		keyString = keyString.slice(0, -1)
+		Object.keys(values).forEach((key) =>{
+			if(key.includes(keyString)){
+				count ++;
+			}
+		});
+		return count+1;
+	}
+}
+
+

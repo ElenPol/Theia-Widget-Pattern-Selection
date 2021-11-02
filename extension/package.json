@@ -10,8 +10,7 @@
   ],
   "dependencies": {
     "@theia/core": "latest",
-    "@theia/plugin-dev": "latest",
-    "@theia/plugin-ext": "latest"
+    "@theia/file-search": "1.18.0"
   },
   "devDependencies": {
     "rimraf": "latest",
@@ -23,14 +22,10 @@
     "build": "tsc",
     "watch": "tsc -w"
   },
-  "browser": {
-    "fs": false,
-    "path": false,
-    "os": false
-  },
   "theiaExtensions": [
     {
-      "frontend": "lib/browser/extension-frontend-module"
+      "frontend": "lib/browser/extension-frontend-module",
+      "backend": "lib/node/test-backend-module"
     }
   ]
 }

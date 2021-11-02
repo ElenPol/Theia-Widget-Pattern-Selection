@@ -79,12 +79,16 @@ export const ExtensionCommand = {
 export class ExtensionCommandContribution implements CommandContribution {
 
     constructor(
-        @inject(MessageService) private readonly messageService: MessageService,
+        @inject(HelloBackendWithClientService) private readonly helloBackendWithClientService: HelloBackendWithClientService,
+        @inject(HelloBackendService) private readonly helloBackendService: HelloBackendService,
     ) { }
 
     registerCommands(registry: CommandRegistry): void {
-        registry.registerCommand(ExtensionCommand, {
-            execute: () => this.messageService.info('Hello World!')
+        registry.registerCommand(SayHelloViaBackendCommandWithCallBack, {
+            execute: () => this.helloBackendWithClientService.greet().then(r => console.log(r))
+        });
+        registry.registerCommand(SayHelloViaBackendCommand, {
+            execute: () => this.helloBackendService.sayHelloTo('World').then(r => console.log(r))
         });
     }
 }

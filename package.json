@@ -9,7 +9,6 @@
     "watch": "lerna run --parallel watch"
   },
   "devDependencies": {
-    "@types/node": "^16.10.2",
     "lerna": "2.4.0"
   },
   "workspaces": [
@@ -18,11 +17,9 @@
     "electron-app"
   ],
   "dependencies": {
-    "@types/node": "^16.10.2",
+    "@theia/file-search": "^1.18.0",
+    "@types/node": "^16.11.6",
     "@types/react": "^17.0.19",
-    "@types/react-dom": "^17.0.9",
-    "@types/styled-components": "^5.1.13",
-    "react-focus-lock": "^2.5.2",
-    "walk": "^2.3.15"
+    "update-json-file": "^1.1.1"
   }
 }
