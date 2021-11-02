@@ -113,21 +113,28 @@ export class extensionWidget extends ReactWidget {
 					t3.id = "btn"+ key;
 					cell3.appendChild(t3);
 					t3.addEventListener('click', (event) => {
-						this.buttonClick(table, ( event.target as Element).id, values, "");
+						this.buttonClick(table, ( event.target as Element).id, extensionWidget.data[extensionWidget.state.statePatternSelection].values, "");
 					});	
 				}
 				if (("classes" in values[key]) == true){
 					var classes = values[key]["classes"];
-					Object.keys(classes).forEach((key) =>{
-						var row = this.insertCells(table, key);
-						if(classes[key].extension==1){
+					Object.keys(classes).forEach((key1) =>{
+						var row = this.insertCells(table, key1);
+						if(classes[key1].extension==1){
 							var cell3 = row.insertCell(2);
 							var t3 = document.createElement("button");
 							t3.innerHTML = "+";
-							t3.id = "btn"+ key;
+							t3.id = "btn"+ key1;
 							cell3.appendChild(t3);
 							t3.addEventListener('click', (event) => {
-								this.buttonClick(table, ( event.target as Element).id, values, classes);
+								console.log("key " + key);
+								console.log(JSON.stringify(extensionWidget.data[extensionWidget.state.statePatternSelection]));
+								this.buttonClick(table, ( event.target as Element).id, extensionWidget.data[extensionWidget.state.statePatternSelection].values,
+												extensionWidget.data[extensionWidget.state.statePatternSelection].values[key].classes);
+								
+								console.log("RUNPROCESS " + JSON.stringify(extensionWidget.data[extensionWidget.state.statePatternSelection].values));
+								
+								 								
 							});	
 						}
 
@@ -183,12 +190,17 @@ export class extensionWidget extends ReactWidget {
 		return row;
 	}
 	//when button is clicked adds one label and one input of the specific class that the user wants to insert one more 
-	buttonClick (table: HTMLTableElement, key: string, values: string, classes: string): void {
+	buttonClick (table: HTMLTableElement, key: string, values: string, classes: string) {
+		console.log(JSON.stringify(values));
 		if(extensionWidget.state.statePatternSelection=="Abstract Factory"){
 			if(key.includes("AbstractProduct")){
+				var newValues = JSON.parse(JSON.stringify(values));
 				var count = this.countKeys(values, key.substr(3,));
 				console.log(key.substr(3,), count);
 				var labelAbstrProd = this.updateLabel(key.substr(3,), count);
+				newValues[labelAbstrProd] ={name:"",extension:1,classes:{}};
+				//JSON.stringify({ "name":"", "extension":1 });
+				//newValues[labelAbstrProd]["classes"] = JSON.stringify({"dff":""});
 				var row = this.insertCells(table, labelAbstrProd);
 				var cell3 = row.insertCell(2);
 				var t3 = document.createElement("button");
@@ -196,13 +208,15 @@ export class extensionWidget extends ReactWidget {
 				t3.id = "btn"+ labelAbstrProd;
 				cell3.appendChild(t3);
 
-				var newValues = JSON.parse(JSON.stringify(values));
+				console.log("classes " + JSON.stringify(newValues[labelAbstrProd]["classes"]));
 				var count2 = this.countKeys(newValues[key.substr(3,)]["classes"], "Product")-1;
+				console.log("count "+count2);
 				for(var j=0;j<count2;j++){
 					var labelProduct = "Product"+count+"."+(j+1);
 					var row = this.insertCells(table, labelProduct);
-					newValues[labelProduct]= JSON.stringify({ "name":"", "extension":1});
+					newValues[labelAbstrProd]["classes"][labelProduct]= JSON.stringify({ "name":"", "extension":1});
 				}
+				
 				t3.addEventListener('click', (event) => {
 						this.buttonClick(table, ( event.target as Element).id, values, "");
 					});	
@@ -223,7 +237,7 @@ export class extensionWidget extends ReactWidget {
 				for(var j=0;j<numAbstrProd;j++){
 					var labelProduct = "Product"+(j+1)+"."+count;
 					var row = this.insertCells(table, labelProduct);
-					newValues["AbstractProduct"+(j+1)][labelProduct]= JSON.stringify({ "name":"", "extension":1});
+					newValues["AbstractProduct"+(j+1)]["classes"][labelProduct]= JSON.stringify({ "name":"", "extension":1});
 				}
 				
 			}
@@ -240,8 +254,7 @@ export class extensionWidget extends ReactWidget {
 			var newValues = JSON.parse(JSON.stringify(values));
 			newValues[labelProduct] =  JSON.stringify({ "name":"", "extension":1});
 			newValues["Builder"]["classes"][labelConBuilder] = JSON.stringify({ "name":"", "extension":1});
-			console.log(JSON.stringify(newValues));
-
+			
 			var row = this.insertCells(table, labelProduct); 
 			var cell3 = row.insertCell(2);
 			var t3 = document.createElement("button");
@@ -313,12 +326,10 @@ export class extensionWidget extends ReactWidget {
 			t4.innerHTML = "+";
 			t4.id = "btn"+ labelConIterator;
 			cell3.appendChild(t4);
-
 			
 			var newValues = JSON.parse(JSON.stringify(values));
 			newValues["Aggregate"]["classes"][labelConAggregate] = JSON.stringify( { "name":"", "extension":1});//attribute "classes" in Aggreagate attribute gets new json value
 			newValues["Iterator"]["classes"][labelConIterator] = JSON.stringify({ "name":"", "extension":1});
-
 				
 			console.log(JSON.stringify(newValues));
 
@@ -352,7 +363,8 @@ export class extensionWidget extends ReactWidget {
 				this.buttonClick(table, ( event.target as Element).id, values, classes);
 			});	
 		}
-		console.log(JSON.stringify(newValues));
+		//console.log(JSON.stringify(newValues));
+		extensionWidget.data[extensionWidget.state.statePatternSelection].values = newValues;
 	}
 
 	buttonClick2 (rows : number):void{
