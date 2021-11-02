@@ -1,6 +1,7 @@
 import { injectable, inject } from "inversify";
 import { HelloBackendService } from "../common/protocol";
 import {FileSearchService } from "@theia/file-search/lib/common/file-search-service";
+import * as fs from 'fs';
 
 @injectable()
 export class HelloBackendServiceImpl implements HelloBackendService {
@@ -10,15 +11,10 @@ export class HelloBackendServiceImpl implements HelloBackendService {
       
     static index = -1;
 
-    sayHelloTo(url: string, table: Array<string>): Promise<number> {
+    async sayHelloTo(url: string, table: Array<string>): Promise<number> {
         //string manipulation to get the right form of url string
-        var lastL = url.lastIndexOf("c:");
-        var testFolder = url.substr(lastL+3);
-        var splitted = testFolder.split("/");
-        var rootUri = "C:";
-        splitted.forEach(function (value) {
-            rootUri = rootUri + "\\" + value;
-          }); 
+        var lastL = url.indexOf("/#/");
+        var rootUri = url.substr(lastL+3);
         //console.log(rootUri);
 
         //prepare file-search, define search pattern
@@ -32,7 +28,7 @@ export class HelloBackendServiceImpl implements HelloBackendService {
        
         //search for every file name in textbox values
         //index=-1 if not found
-        this.fileSearchService.find('',opts).then((res)=>{
+        var res= await this.fileSearchService.find('',opts);
 		    res.forEach(function (str2){
                 var lastW = str2.lastIndexOf("/");
                 var file = str2.substr(lastW+1);
@@ -45,8 +41,9 @@ export class HelloBackendServiceImpl implements HelloBackendService {
                     }
                 }
             });
-		});
-        
+            
+           console.log(fs.readFileSync('C:/Users/test/Downloads/src/src/Main.java','utf8'));
+
         return new Promise<number>(resolve => resolve(HelloBackendServiceImpl.index));
 
 
