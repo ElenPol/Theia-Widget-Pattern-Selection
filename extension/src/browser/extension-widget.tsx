@@ -106,7 +106,6 @@ export class extensionWidget extends ReactWidget {
 			var getUrl = window.location.href;
 			extensionWidget.res = await this.helloBackendService.sayHelloTo(getUrl);
 			for (var i=0; i<extensionWidget.res.length; i++){
-				console.log(1);
             	var lastW = extensionWidget.res[i].lastIndexOf("/");
 				var file = extensionWidget.res[i].substr(lastW+1);
 				file = file.substr(0, file.indexOf("."));
@@ -197,7 +196,7 @@ export class extensionWidget extends ReactWidget {
 		t2.placeholder = key;
 		t2.addEventListener('keypress', (e: KeyboardEvent) =>{
 			//You have yout key code here
-			this.showResults(t2.value, ( e.target as Element).id);
+			this.showSuggestions(t2.value, ( e.target as Element).id);
 		});
 		var t3 = document.createElement("div");
 		t3.id = "suggestions"+table.rows.length;
@@ -339,7 +338,7 @@ export class extensionWidget extends ReactWidget {
 		return count+1;
 	}
 
-	showResults(value: string, id: string){
+	showSuggestions(value: string, id: string){
 		var res = document.getElementById("suggestions"+id.substr(6,))as HTMLElement;
 		
   		let list = '';
