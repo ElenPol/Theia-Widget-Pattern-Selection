@@ -12,6 +12,7 @@ import data from './data.json';
 
 @injectable()
 export class extensionWidget extends ReactWidget {
+	
 	[x: string]: any;
 
     static readonly ID = 'extension:widget';
@@ -40,7 +41,8 @@ export class extensionWidget extends ReactWidget {
 	}
 	
 	static setState: any;
-	static textBoxValues : Array<string> = [];
+	static textBoxValues: Array<string> = [];
+	static res: string[];
 	static data = JSON.parse(JSON.stringify(data));
 	static  search_terms = ['apple', 'apple watch', 'apple macbook', 'apple macbook pro', 'iphone', 'iphone 12'];
 	protected render(): React.ReactNode {
@@ -97,10 +99,20 @@ export class extensionWidget extends ReactWidget {
 			</div>
 	}
 	
-    protected runprocess(): void {
+    protected async runprocess(): Promise<void> {
 		if (extensionWidget.state.statePatternSelection!="Choose_pattern" && extensionWidget.state.statePatternSelection!=""){
 			(document.getElementById("btn-get-code") as HTMLButtonElement).style.visibility = 'hidden';
-			
+			var getUrl = window.location.href;
+			extensionWidget.res = await this.helloBackendService.sayHelloTo(getUrl);
+			for (var i=0; i<extensionWidget.res.length; i++){
+            	var lastW = extensionWidget.res[i].lastIndexOf("/");
+				var file = extensionWidget.res[i].substr(lastW+1);
+				file = file.substr(0, file.indexOf("."));
+				console.log(file);
+				extensionWidget.res[i] = file;  
+			}
+			console.log("FRONT " + extensionWidget.res);
+
 			//show the JSON values for the chosen key-pattern
 			var values = extensionWidget.data[extensionWidget.state.statePatternSelection].values; //data[extensionWidget.state.statePatternSelection];
 			var table = document.getElementById('show_pattern_table') as HTMLTableElement;
@@ -305,15 +317,7 @@ export class extensionWidget extends ReactWidget {
 		if (rows!=extensionWidget.textBoxValues.length){
 			this.messageService.info("You need to give name for ALL the classes!");
 		}else{
-			var getUrl = window.location.href;
-			this.helloBackendService.sayHelloTo(getUrl, extensionWidget.textBoxValues).then((index) => {
-				if (index!=-1){
-					this.messageService.info("The name of the " + (index+1) + " class already exists in the project! ");
-				}else{
-					//call function for code generate
-					this.messageService.info("Well done! Code is coming...");
-				}
-			});
+			this.messageService.info("Well done! Code is coming...");
 		}
 	}
 

@@ -4,7 +4,7 @@ export const HelloBackendService = Symbol('HelloBackendService');
 export const HELLO_BACKEND_PATH = '/services/helloBackend';
 
 export interface HelloBackendService {
-    sayHelloTo(url: string, table: Array<string>): Promise<number>;
+    sayHelloTo(url: string): Promise<string[]>;
     
 }
 export const HelloBackendWithClientService = Symbol('BackendWithClient');
