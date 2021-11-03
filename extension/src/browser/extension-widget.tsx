@@ -44,7 +44,7 @@ export class extensionWidget extends ReactWidget {
 	static textBoxValues: Array<string> = [];
 	static res: string[];
 	static data = JSON.parse(JSON.stringify(data));
-	static  search_terms = ['apple', 'apple watch', 'apple macbook', 'apple macbook pro', 'iphone', 'iphone 12'];
+	
 	protected render(): React.ReactNode {
 		const header = `Choose a Design Pattern and get the code. `;
 		
@@ -102,9 +102,11 @@ export class extensionWidget extends ReactWidget {
     protected async runprocess(): Promise<void> {
 		if (extensionWidget.state.statePatternSelection!="Choose_pattern" && extensionWidget.state.statePatternSelection!=""){
 			(document.getElementById("btn-get-code") as HTMLButtonElement).style.visibility = 'hidden';
+
 			var getUrl = window.location.href;
 			extensionWidget.res = await this.helloBackendService.sayHelloTo(getUrl);
 			for (var i=0; i<extensionWidget.res.length; i++){
+				console.log(1);
             	var lastW = extensionWidget.res[i].lastIndexOf("/");
 				var file = extensionWidget.res[i].substr(lastW+1);
 				file = file.substr(0, file.indexOf("."));
@@ -140,9 +142,7 @@ export class extensionWidget extends ReactWidget {
 							cell3.appendChild(t3);
 							t3.addEventListener('click', (event) => {
 								this.buttonClick(table, ( event.target as Element).id, extensionWidget.data[extensionWidget.state.statePatternSelection].values,
-												extensionWidget.data[extensionWidget.state.statePatternSelection].values[key].classes);
-								
-								 								
+												extensionWidget.data[extensionWidget.state.statePatternSelection].values[key].classes);							
 							});	
 						}
 
@@ -362,7 +362,7 @@ export class extensionWidget extends ReactWidget {
 			return [];
 	  	}
 	  	var reg = new RegExp(input)
-	  	return extensionWidget.search_terms.filter(function(term) {
+	  	return extensionWidget.res.filter(function(term) {
 		  	if (term.match(reg)) {
 				return term;
 		 	 }
